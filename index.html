@@ -6,86 +6,205 @@
     <title>飯店餐飲多語學習字卡系統</title>
     <style>
         :root {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
+            --bg-color: #0b132b;
+            --card-bg: #1c2541;
             --accent-color: #38bdf8;
             --text-main: #f8fafc;
             --text-sub: #94a3b8;
             --gold-color: #fbbf24;
+            --card-border: #334155;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-        body { background-color: var(--bg-color); color: var(--text-main); display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px; }
-        header { text-align: center; margin-bottom: 20px; }
-        header h1 { font-size: 1.8rem; color: var(--accent-color); margin-bottom: 6px; }
+        
+        body { 
+            background-color: var(--bg-color); 
+            color: var(--text-main); 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            min-height: 100vh; 
+            padding: 24px 16px; 
+        }
+
+        header { text-align: center; margin-bottom: 24px; }
+        header h1 { font-size: 1.8rem; color: var(--accent-color); margin-bottom: 6px; font-weight: 700; letter-spacing: 0.5px; }
         header p { color: var(--text-sub); font-size: 0.95rem; }
 
-        .controls { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center; }
-        select { background-color: var(--card-bg); color: var(--text-main); border: 1px solid #334155; padding: 8px 14px; border-radius: 8px; font-size: 0.9rem; outline: none; cursor: pointer; }
+        .controls { 
+            display: flex; 
+            gap: 12px; 
+            margin-bottom: 24px; 
+            flex-wrap: wrap; 
+            justify-content: center; 
+            width: 100%;
+            max-width: 520px;
+        }
 
-        .card-container { width: 100%; max-width: 480px; height: 380px; perspective: 1000px; cursor: pointer; }
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            flex: 1 1 140px;
+        }
+
+        .control-label {
+            font-size: 0.75rem;
+            color: var(--text-sub);
+            margin-left: 2px;
+            font-weight: 600;
+        }
+
+        select { 
+            background-color: var(--card-bg); 
+            color: var(--text-main); 
+            border: 1px solid var(--card-border); 
+            padding: 10px 14px; 
+            border-radius: 10px; 
+            font-size: 0.9rem; 
+            outline: none; 
+            cursor: pointer;
+            width: 100%;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            transition: border-color 0.2s;
+        }
+
+        select:focus {
+            border-color: var(--accent-color);
+        }
+
+        .card-container { width: 100%; max-width: 480px; height: 390px; perspective: 1000px; cursor: pointer; }
         .card { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
         .card.flipped { transform: rotateY(180deg); }
-        .card-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 16px; background-color: var(--card-bg); border: 1px solid #334155; box-shadow: 0 10px 25px rgba(0,0,0,0.5); display: flex; flex-direction: column; padding: 25px; justify-content: space-between; }
+        
+        .card-face { 
+            position: absolute; 
+            width: 100%; 
+            height: 100%; 
+            backface-visibility: hidden; 
+            border-radius: 20px; 
+            background-color: var(--card-bg); 
+            border: 1px solid var(--card-border); 
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4); 
+            display: flex; 
+            flex-direction: column; 
+            padding: 24px; 
+            justify-content: space-between; 
+        }
+
         .card-back { transform: rotateY(180deg); overflow-y: auto; }
 
-        .badge { align-self: flex-start; background-color: rgba(56, 189, 248, 0.1); color: var(--accent-color); padding: 4px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; }
+        .badge { 
+            align-self: flex-start; 
+            background-color: rgba(56, 189, 248, 0.12); 
+            color: var(--accent-color); 
+            padding: 6px 14px; 
+            border-radius: 20px; 
+            font-size: 0.85rem; 
+            font-weight: 600; 
+            border: 1px solid rgba(56, 189, 248, 0.2);
+        }
+
         .main-word { text-align: center; margin: auto 0; }
-        .main-word h2 { font-size: 2rem; color: var(--text-main); margin-bottom: 8px; }
-        .phonetic { color: var(--gold-color); font-size: 1.05rem; font-style: italic; }
+        .main-word h2 { font-size: 2.2rem; color: var(--text-main); margin-bottom: 10px; font-weight: 700; }
+        .phonetic { color: var(--gold-color); font-size: 1.1rem; font-style: italic; letter-spacing: 0.5px; }
 
-        .audio-btn { background-color: var(--accent-color); color: #0f172a; border: none; padding: 8px 18px; border-radius: 20px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 6px; margin: 0 auto; }
-        
-        .lang-list { display: flex; flex-direction: column; gap: 10px; text-align: left; margin-top: 5px; }
-        .lang-item { border-bottom: 1px solid #334155; padding-bottom: 6px; }
+        .audio-btn { 
+            background-color: var(--accent-color); 
+            color: #0b132b; 
+            border: none; 
+            padding: 10px 24px; 
+            border-radius: 25px; 
+            font-size: 0.95rem;
+            font-weight: 700; 
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+            margin: 0 auto; 
+            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
+            transition: transform 0.1s, background-color 0.2s;
+        }
+
+        .audio-btn:active {
+            transform: scale(0.96);
+        }
+
+        .lang-list { display: flex; flex-direction: column; gap: 10px; text-align: left; margin-top: 4px; }
+        .lang-item { border-bottom: 1px solid var(--card-border); padding-bottom: 8px; }
         .lang-item:last-child { border-bottom: none; }
-        .lang-label { font-size: 0.75rem; color: var(--text-sub); display: block; }
-        .lang-text { font-size: 0.95rem; font-weight: 500; color: var(--text-main); }
-        .lang-example { font-size: 0.8rem; color: #cbd5e1; margin-top: 2px; }
+        .lang-label { font-size: 0.75rem; color: var(--text-sub); display: block; margin-bottom: 2px; }
+        .lang-text { font-size: 1rem; font-weight: 600; color: var(--text-main); }
+        .lang-example { font-size: 0.85rem; color: #cbd5e1; margin-top: 3px; line-height: 1.3; }
 
-        .note-box { background-color: rgba(251, 191, 36, 0.1); border-left: 3px solid var(--gold-color); padding: 8px 12px; font-size: 0.8rem; color: #fde68a; margin-top: 8px; border-radius: 0 4px 4px 0; }
-        .nav-buttons { display: flex; gap: 20px; margin-top: 20px; }
-        .nav-btn { background-color: var(--card-bg); border: 1px solid #334155; color: var(--text-main); padding: 8px 20px; border-radius: 8px; cursor: pointer; font-size: 0.95rem; }
-        .hint { color: var(--text-sub); font-size: 0.8rem; margin-top: 10px; }
+        .note-box { 
+            background-color: rgba(251, 191, 36, 0.08); 
+            border-left: 3px solid var(--gold-color); 
+            padding: 10px 14px; 
+            font-size: 0.85rem; 
+            color: #fde68a; 
+            margin-top: 10px; 
+            border-radius: 0 8px 8px 0; 
+            line-height: 1.4;
+        }
+
+        .nav-buttons { display: flex; gap: 24px; margin-top: 24px; align-items: center; }
+        .nav-btn { 
+            background-color: var(--card-bg); 
+            border: 1px solid var(--card-border); 
+            color: var(--text-main); 
+            padding: 10px 24px; 
+            border-radius: 10px; 
+            cursor: pointer; 
+            font-size: 0.95rem; 
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.2s;
+        }
+
+        .nav-btn:hover {
+            background-color: #24304f;
+        }
+
+        .hint { color: var(--text-sub); font-size: 0.85rem; margin-top: 14px; }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>飯店餐飲多語學習字卡</h1>
-        <p>涵蓋 中・英・越・印尼・峇里島語</p>
+        <h1 id="uiTitle">飯店餐飲多語學習字卡</h1>
+        <p id="uiSubtitle">涵蓋 中・英・越・印尼・峇里島語</p>
     </header>
 
     <div class="controls">
-        <!-- 分類選擇器 -->
-        <select id="categorySelect" onchange="filterCategory()">
-            <option value="ALL">所有主題分類 (全收錄)</option>
-            <option value="顧客接待">1. 顧客接待與問候 (10組)</option>
-            <option value="職場團隊溝通">2. 職場團隊溝通 (10組)</option>
-            <option value="日常生活關懷">3. 日常生活與關懷 (10組)</option>
-            <option value="生活需求指示">4. 生活需求與指示 (10組)</option>
-            <option value="現場請託協助">5. 現場請託與協助 (10組)</option>
-            <option value="基礎數字">6. 基礎數字 (10組)</option>
-            <option value="進階數字與結帳">7. 進階數字與結帳 (10組)</option>
-            <option value="餐飲與點餐">8. 餐飲與點餐 (10組)</option>
-            <option value="稱呼與日常應答">9. 稱呼與日常應答 (10組)</option>
-            <option value="方向與交通">10. 方向與交通 (10組)</option>
-        </select>
+        <!-- 優先選擇主要語言 -->
+        <div class="control-group">
+            <span class="control-label" id="lblLangSelect">1. 主要語言 (Language)</span>
+            <select id="langSelect" onchange="onLanguageChange()">
+                <option value="zh">繁體中文</option>
+                <option value="en">English</option>
+                <option value="vi">Tiếng Việt</option>
+                <option value="id">Bahasa Indonesia</option>
+                <option value="balinese">Basa Bali</option>
+            </select>
+        </div>
 
-        <!-- 語言選擇器 -->
-        <select id="langSelect" onchange="updateCardDisplay()">
-            <option value="zh">主語言：中文</option>
-            <option value="en">Main: English</option>
-            <option value="vi">Chính: Tiếng Việt</option>
-            <option value="id">Utama: B. Indonesia</option>
-            <option value="balinese">Utama: Basa Bali</option>
-        </select>
+        <!-- 主題分類選擇器 -->
+        <div class="control-group" style="flex: 2 1 200px;">
+            <span class="control-label" id="lblCategorySelect">2. 主題分類 (Category)</span>
+            <select id="categorySelect" onchange="filterCategory()">
+                <!-- 由 JavaScript 動態繪製與翻譯 -->
+            </select>
+        </div>
 
         <!-- 語音性別選擇器 -->
-        <select id="genderSelect">
-            <option value="female">語音性別：女聲 (偏好)</option>
-            <option value="male">語音性別：男聲 (偏好)</option>
-        </select>
+        <div class="control-group">
+            <span class="control-label" id="lblGenderSelect">3. 語音性別 (Voice)</span>
+            <select id="genderSelect">
+                <option value="female" id="optFemale">女聲 (Female)</option>
+                <option value="male" id="optMale">男聲 (Male)</option>
+            </select>
+        </div>
     </div>
 
     <div class="card-container" onclick="flipCard()">
@@ -97,7 +216,9 @@
                     <h2 id="frontWord">單字</h2>
                     <p class="phonetic" id="frontPhonetic">拼音</p>
                 </div>
-                <button class="audio-btn" onclick="event.stopPropagation(); playSpeech();">🔊 發音</button>
+                <button class="audio-btn" onclick="event.stopPropagation(); playSpeech();">
+                    🔊 <span id="btnAudioText">發音朗讀</span>
+                </button>
             </div>
 
             <!-- 反面 -->
@@ -108,15 +229,149 @@
         </div>
     </div>
 
-    <p class="hint">💡 點擊卡片可翻面查看全語言對照與例句</p>
+    <p class="hint" id="uiHint">💡 點擊卡片即可翻面查看全語言對照與例句</p>
 
     <div class="nav-buttons">
-        <button class="nav-btn" onclick="prevCard()">上一張</button>
-        <span id="cardProgress" style="align-self: center; color: var(--text-sub);">1 / 1</span>
-        <button class="nav-btn" onclick="nextCard()">下一張</button>
+        <button class="nav-btn" id="btnPrev" onclick="prevCard()">上一張</button>
+        <span id="cardProgress" style="align-self: center; color: var(--text-sub); font-weight: 600;">1 / 1</span>
+        <button class="nav-btn" id="btnNext" onclick="nextCard()">下一張</button>
     </div>
 
     <script>
+        // 介面多語字典 (i18n)
+        const uiI18n = {
+            zh: {
+                title: "飯店餐飲多語學習字卡",
+                subtitle: "涵蓋 中・英・越・印尼・峇里島語",
+                lblLang: "1. 主要語言 (Main Language)",
+                lblCat: "2. 主題分類 (Category)",
+                lblGender: "3. 語音性別 (Voice)",
+                btnAudio: "發音朗讀",
+                hint: "💡 點擊卡片即可翻面查看全語言對照與例句",
+                btnPrev: "上一張",
+                btnNext: "下一張",
+                optFemale: "女聲",
+                optMale: "男聲",
+                allCat: "所有主題分類 (全收錄)",
+                categories: {
+                    "顧客接待": "1. 顧客接待與問候 (10組)",
+                    "職場團隊溝通": "2. 職場團隊溝通 (10組)",
+                    "日常生活關懷": "3. 日常生活與關懷 (10組)",
+                    "生活需求指示": "4. 生活需求與指示 (10組)",
+                    "現場請託協助": "5. 現場請託與協助 (10組)",
+                    "基礎數字": "6. 基礎數字 (10組)",
+                    "進階數字與結帳": "7. 進階數字與結帳 (10組)",
+                    "餐飲與點餐": "8. 餐飲與點餐 (10組)",
+                    "稱呼與日常應答": "9. 稱呼與日常應答 (10組)",
+                    "方向與交通": "10. 方向與交通 (10組)"
+                }
+            },
+            en: {
+                title: "Hospitality Multi-Lang Flashcards",
+                subtitle: "Covering ZH · EN · VI · ID · BALI",
+                lblLang: "1. Main Language",
+                lblCat: "2. Category",
+                lblGender: "3. Voice Gender",
+                btnAudio: "Listen",
+                hint: "💡 Click card to flip and view all translations & examples",
+                btnPrev: "Previous",
+                btnNext: "Next",
+                optFemale: "Female",
+                optMale: "Male",
+                allCat: "All Categories (All Cards)",
+                categories: {
+                    "顧客接待": "1. Guest Greeting & Reception (10)",
+                    "職場團隊溝通": "2. Workplace Communication (10)",
+                    "日常生活關懷": "3. Daily Care & Greetings (10)",
+                    "生活需求指示": "4. Life Needs & Requests (10)",
+                    "現場請託協助": "5. Assistance & Help (10)",
+                    "基礎數字": "6. Basic Numbers (10)",
+                    "進階數字與結帳": "7. Numbers & Payment (10)",
+                    "餐飲與點餐": "8. Dining & Ordering (10)",
+                    "稱呼與日常應答": "9. Titles & Responses (10)",
+                    "方向與交通": "10. Directions & Transit (10)"
+                }
+            },
+            vi: {
+                title: "Thẻ học đa ngôn ngữ Khách sạn & Nhà hàng",
+                subtitle: "Bao gồm Trung · Anh · Việt · Indonesia · Bali",
+                lblLang: "1. Ngôn ngữ chính",
+                lblCat: "2. Danh mục chủ đề",
+                lblGender: "3. Giọng đọc",
+                btnAudio: "Phát âm",
+                hint: "💡 Nhấp vào thẻ để lật xem tất cả bản dịch và ví dụ",
+                btnPrev: "Trang trước",
+                btnNext: "Trang sau",
+                optFemale: "Giọng nữ",
+                optMale: "Giọng nam",
+                allCat: "Tất cả danh mục",
+                categories: {
+                    "顧客接待": "1. Đón tiếp khách (10)",
+                    "職場團隊溝通": "2. Giao tiếp đồng nghiệp (10)",
+                    "日常生活關懷": "3. Quan tâm hàng ngày (10)",
+                    "生活需求指示": "4. Nhu cầu sinh hoạt (10)",
+                    "現場請託協助": "5. Yêu cầu hỗ trợ (10)",
+                    "基礎數字": "6. Chữ số cơ bản (10)",
+                    "進階數字與結帳": "7. Con số & Thanh toán (10)",
+                    "餐飲與點餐": "8. Ẩm thực & Gọi món (10)",
+                    "稱呼與日常應答": "9. Xưng hô & Trả lời (10)",
+                    "方向與交通": "10. Phương hướng (10)"
+                }
+            },
+            id: {
+                title: "Kartu Belajar Multi-Bahasa Restoran & Hotel",
+                subtitle: "Mencakup Mandarin · Inggris · Vietnam · Indonesia · Bali",
+                lblLang: "1. Bahasa Utama",
+                lblCat: "2. Kategori Topik",
+                lblGender: "3. Suara Gender",
+                btnAudio: "Dengar Suara",
+                hint: "💡 Klik kartu untuk membalik & melihat semua terjemahan",
+                btnPrev: "Sebelumnya",
+                btnNext: "Selanjutnya",
+                optFemale: "Wanita",
+                optMale: "Pria",
+                allCat: "Semua Kategori",
+                categories: {
+                    "顧客接待": "1. Menyambut Tamu (10)",
+                    "職場團隊溝通": "2. Komunikasi Tim (10)",
+                    "日常生活關懷": "3. Perhatian Harian (10)",
+                    "生活需求指示": "4. Kebutuhan Sehari-hari (10)",
+                    "現場請託協助": "5. Bantuan di Lapangan (10)",
+                    "基礎數字": "6. Angka Dasar (10)",
+                    "進階數字與結帳": "7. Angka & Pembayaran (10)",
+                    "餐飲與點餐": "8. Makanan & Pesanan (10)",
+                    "稱呼與日常應答": "9. Panggilan & Jawaban (10)",
+                    "方向與交通": "10. Arah & Transportasi (10)"
+                }
+            },
+            balinese: {
+                title: "Kartu Melajah Basa Restoran & Hotel",
+                subtitle: "Mencakup Mandarin · Inggris · Vietnam · Indonesia · Bali",
+                lblLang: "1. Basa Utama",
+                lblCat: "2. Kategori Topik",
+                lblGender: "3. Suara Gender",
+                btnAudio: "Mireng Suara",
+                hint: "💡 Klik kartu anggen ngiring nyingakin terjemahan",
+                btnPrev: "Mewali",
+                btnNext: "Lantas",
+                optFemale: "Istri (Wanita)",
+                optMale: "Lanang (Pria)",
+                allCat: "Sami Kategori",
+                categories: {
+                    "顧客接待": "1. Nampi Tamiu (10)",
+                    "職場團隊溝通": "2. Komunikasi Tim (10)",
+                    "日常生活關懷": "3. Perhatian Harian (10)",
+                    "生活需求指示": "4. Kebutuhan Sehari-hari (10)",
+                    "現場請託協助": "5. Nunas Bantuan (10)",
+                    "基礎數字": "6. Angka Dasar (10)",
+                    "進階數字與結帳": "7. Angka & Mayah (10)",
+                    "餐飲與點餐": "8. Ajengan & Pesanan (10)",
+                    "稱呼與日常應答": "9. Panggilan & Pesaur (10)",
+                    "方向與交通": "10. Margi & Marga (10)"
+                }
+            }
+        };
+
         const allFlashcards = [
             // --- 1. 顧客接待與問候 (10組) ---
             {
@@ -1053,6 +1308,43 @@
             loadVoices();
         }
 
+        // 當使用者切換主語言時觸發
+        function onLanguageChange() {
+            const currentLang = document.getElementById('langSelect').value;
+            const dict = uiI18n[currentLang] || uiI18n['zh'];
+
+            // 1. 更新 UI 文字
+            document.getElementById('uiTitle').innerText = dict.title;
+            document.getElementById('uiSubtitle').innerText = dict.subtitle;
+            document.getElementById('lblLangSelect').innerText = dict.lblLang;
+            document.getElementById('lblCategorySelect').innerText = dict.lblCat;
+            document.getElementById('lblGenderSelect').innerText = dict.lblGender;
+            document.getElementById('btnAudioText').innerText = dict.btnAudio;
+            document.getElementById('uiHint').innerText = dict.hint;
+            document.getElementById('btnPrev').innerText = dict.btnPrev;
+            document.getElementById('btnNext').innerText = dict.btnNext;
+            document.getElementById('optFemale').innerText = dict.optFemale;
+            document.getElementById('optMale').innerText = dict.optMale;
+
+            // 2. 動態重構主題選單
+            const catSelect = document.getElementById('categorySelect');
+            const savedCat = catSelect.value || 'ALL';
+            
+            let catOptionsHtml = `<option value="ALL">${dict.allCat}</option>`;
+            const catKeys = ["顧客接待", "職場團隊溝通", "日常生活關懷", "生活需求指示", "現場請託協助", "基礎數字", "進階數字與結帳", "餐飲與點餐", "稱呼與日常應答", "方向與交通"];
+            
+            catKeys.forEach(key => {
+                const label = dict.categories[key] || key;
+                catOptionsHtml += `<option value="${key}">${label}</option>`;
+            });
+            
+            catSelect.innerHTML = catOptionsHtml;
+            catSelect.value = savedCat;
+
+            // 3. 重新渲染字卡與反面資訊
+            filterCategory();
+        }
+
         function filterCategory() {
             const selectedCat = document.getElementById('categorySelect').value;
             if (selectedCat === 'ALL') {
@@ -1069,8 +1361,12 @@
             const cardData = filteredCards[currentIndex];
             const currentLang = document.getElementById('langSelect').value;
             const langObj = cardData[currentLang] || cardData['zh'];
+            const dict = uiI18n[currentLang] || uiI18n['zh'];
 
-            document.getElementById('cardCategory').innerText = cardData.category || "一般";
+            // 卡片類別標籤顯示主語言譯名
+            const catTranslated = (dict.categories && dict.categories[cardData.category]) ? dict.categories[cardData.category] : cardData.category;
+            document.getElementById('cardCategory').innerText = catTranslated;
+
             document.getElementById('frontWord').innerText = langObj.word;
             document.getElementById('frontPhonetic').innerText = langObj.phonetic ? `[ ${langObj.phonetic} ]` : "";
 
@@ -1138,11 +1434,12 @@
 
                 window.speechSynthesis.speak(utterance);
             } else {
-                alert("您的瀏覽器不支援語音播放功能。");
+                alert("Your browser does not support text-to-speech.");
             }
         }
 
-        renderCard();
+        // 頁面初始化
+        onLanguageChange();
     </script>
 </body>
 </html>
