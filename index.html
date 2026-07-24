@@ -6,117 +6,379 @@
     <title>飯店餐飲多語學習字卡系統</title>
     <style>
         :root {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
+            --bg-color: #0b132b;
+            --card-bg: #1c2541;
             --accent-color: #38bdf8;
             --text-main: #f8fafc;
             --text-sub: #94a3b8;
             --gold-color: #fbbf24;
+            --card-border: #334155;
+            --active-btn: #0284c7;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-        body { background-color: var(--bg-color); color: var(--text-main); display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px; }
-        header { text-align: center; margin-bottom: 20px; }
-        header h1 { font-size: 1.8rem; color: var(--accent-color); margin-bottom: 6px; }
-        header p { color: var(--text-sub); font-size: 0.95rem; }
+        
+        body { 
+            background-color: var(--bg-color); 
+            color: var(--text-main); 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            min-height: 100vh; 
+            padding: 20px 16px; 
+        }
 
-        .controls { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center; }
-        select { background-color: var(--card-bg); color: var(--text-main); border: 1px solid #334155; padding: 8px 14px; border-radius: 8px; font-size: 0.9rem; outline: none; cursor: pointer; }
+        header { text-align: center; margin-bottom: 20px; }
+        header h1 { font-size: 1.7rem; color: var(--accent-color); margin-bottom: 6px; font-weight: 700; }
+        header p { color: var(--text-sub); font-size: 0.9rem; }
+
+        /* 身份快捷鍵列 */
+        .role-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 500px;
+            justify-content: center;
+        }
+
+        .role-btn {
+            flex: 1;
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            color: var(--text-main);
+            padding: 10px 8px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            transition: all 0.2s ease;
+        }
+
+        .role-btn.active {
+            background-color: var(--accent-color);
+            color: #0b132b;
+            border-color: var(--accent-color);
+            font-weight: 700;
+        }
+
+        /* 控制下拉區 */
+        .controls { 
+            display: flex; 
+            gap: 12px; 
+            margin-bottom: 20px; 
+            flex-wrap: wrap; 
+            justify-content: center; 
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            flex: 1 1 200px;
+        }
+
+        .control-label {
+            font-size: 0.75rem;
+            color: var(--text-sub);
+            margin-left: 2px;
+            font-weight: 600;
+        }
+
+        select { 
+            background-color: var(--card-bg); 
+            color: var(--text-main); 
+            border: 1px solid var(--card-border); 
+            padding: 10px 12px; 
+            border-radius: 10px; 
+            font-size: 0.9rem; 
+            outline: none; 
+            cursor: pointer;
+            width: 100%;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
 
         .card-container { width: 100%; max-width: 480px; height: 380px; perspective: 1000px; cursor: pointer; }
         .card { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
         .card.flipped { transform: rotateY(180deg); }
-        .card-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 16px; background-color: var(--card-bg); border: 1px solid #334155; box-shadow: 0 10px 25px rgba(0,0,0,0.5); display: flex; flex-direction: column; padding: 25px; justify-content: space-between; }
+        
+        .card-face { 
+            position: absolute; 
+            width: 100%; 
+            height: 100%; 
+            backface-visibility: hidden; 
+            border-radius: 20px; 
+            background-color: var(--card-bg); 
+            border: 1px solid var(--card-border); 
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4); 
+            display: flex; 
+            flex-direction: column; 
+            padding: 24px; 
+            justify-content: space-between; 
+        }
+
         .card-back { transform: rotateY(180deg); overflow-y: auto; }
 
-        .badge { align-self: flex-start; background-color: rgba(56, 189, 248, 0.1); color: var(--accent-color); padding: 4px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; }
+        .badge { 
+            align-self: flex-start; 
+            background-color: rgba(56, 189, 248, 0.12); 
+            color: var(--accent-color); 
+            padding: 6px 14px; 
+            border-radius: 20px; 
+            font-size: 0.85rem; 
+            font-weight: 600; 
+            border: 1px solid rgba(56, 189, 248, 0.2);
+        }
+
         .main-word { text-align: center; margin: auto 0; }
-        .main-word h2 { font-size: 2rem; color: var(--text-main); margin-bottom: 8px; }
-        .phonetic { color: var(--gold-color); font-size: 1.05rem; font-style: italic; }
+        .main-word h2 { font-size: 2.2rem; color: var(--text-main); margin-bottom: 8px; font-weight: 700; }
+        .phonetic { color: var(--gold-color); font-size: 1.1rem; font-style: italic; }
 
-        .audio-btn { background-color: var(--accent-color); color: #0f172a; border: none; padding: 8px 18px; border-radius: 20px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 6px; margin: 0 auto; }
-        
-        .lang-list { display: flex; flex-direction: column; gap: 10px; text-align: left; margin-top: 5px; }
-        .lang-item { border-bottom: 1px solid #334155; padding-bottom: 6px; }
-        .lang-item:last-child { border-bottom: none; }
-        .lang-label { font-size: 0.75rem; color: var(--text-sub); display: block; }
-        .lang-text { font-size: 0.95rem; font-weight: 500; color: var(--text-main); }
-        .lang-example { font-size: 0.8rem; color: #cbd5e1; margin-top: 2px; }
+        .audio-btn { 
+            background-color: var(--accent-color); 
+            color: #0b132b; 
+            border: none; 
+            padding: 10px 20px; 
+            border-radius: 25px; 
+            font-size: 0.9rem;
+            font-weight: 700; 
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            gap: 6px; 
+            margin: 0 auto; 
+            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
+            transition: transform 0.1s;
+        }
 
-        .note-box { background-color: rgba(251, 191, 36, 0.1); border-left: 3px solid var(--gold-color); padding: 8px 12px; font-size: 0.8rem; color: #fde68a; margin-top: 8px; border-radius: 0 4px 4px 0; }
-        .nav-buttons { display: flex; gap: 20px; margin-top: 20px; }
-        .nav-btn { background-color: var(--card-bg); border: 1px solid #334155; color: var(--text-main); padding: 8px 20px; border-radius: 8px; cursor: pointer; font-size: 0.95rem; }
-        .hint { color: var(--text-sub); font-size: 0.8rem; margin-top: 10px; }
+        .audio-btn:active { transform: scale(0.96); }
+
+        .back-content {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            text-align: left;
+            margin: auto 0;
+        }
+
+        .native-meaning {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--gold-color);
+            text-align: center;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 12px;
+        }
+
+        .example-box {
+            background-color: rgba(255, 255, 255, 0.03);
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid var(--card-border);
+        }
+
+        .example-label { font-size: 0.75rem; color: var(--text-sub); margin-bottom: 4px; display: block; }
+        .example-text { font-size: 0.95rem; color: var(--text-main); line-height: 1.4; font-weight: 500; }
+
+        .note-box { 
+            background-color: rgba(251, 191, 36, 0.08); 
+            border-left: 3px solid var(--gold-color); 
+            padding: 8px 12px; 
+            font-size: 0.8rem; 
+            color: #fde68a; 
+            border-radius: 0 6px 6px 0; 
+            line-height: 1.3;
+        }
+
+        .nav-buttons { display: flex; gap: 24px; margin-top: 20px; align-items: center; }
+        .nav-btn { 
+            background-color: var(--card-bg); 
+            border: 1px solid var(--card-border); 
+            color: var(--text-main); 
+            padding: 10px 24px; 
+            border-radius: 10px; 
+            cursor: pointer; 
+            font-size: 0.95rem; 
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .hint { color: var(--text-sub); font-size: 0.85rem; margin-top: 12px; }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>飯店餐飲多語學習字卡</h1>
-        <p>涵蓋 中・英・越・印尼・峇里島語</p>
+        <h1 id="uiTitle">飯店餐飲多語學習字卡</h1>
+        <p id="uiSubtitle">跨國團隊現場溝通與語言學習工具</p>
     </header>
 
+    <!-- 頂部一鍵身份快捷 -->
+    <div class="role-selector">
+        <button class="role-btn active" id="btnRoleTW" onclick="setRole('zh')">🇹🇼 台灣夥伴</button>
+        <button class="role-btn" id="btnRoleVI" onclick="setRole('vi')">🇻🇳 Bạn Việt</button>
+        <button class="role-btn" id="btnRoleID" onclick="setRole('id')">🇮🇩 Teman ID</button>
+    </div>
+
     <div class="controls">
-        <!-- 分類選擇器 -->
-        <select id="categorySelect" onchange="filterCategory()">
-            <option value="ALL">所有主題分類 (全收錄)</option>
-            <option value="顧客接待">1. 顧客接待與問候 (10組)</option>
-            <option value="職場團隊溝通">2. 職場團隊溝通 (10組)</option>
-            <option value="日常生活關懷">3. 日常生活與關懷 (10組)</option>
-            <option value="生活需求指示">4. 生活需求與指示 (10組)</option>
-            <option value="現場請託協助">5. 現場請託與協助 (10組)</option>
-            <option value="基礎數字">6. 基礎數字 (10組)</option>
-            <option value="進階數字與結帳">7. 進階數字與結帳 (10組)</option>
-            <option value="餐飲與點餐">8. 餐飲與點餐 (10組)</option>
-            <option value="稱呼與日常應答">9. 稱呼與日常應答 (10組)</option>
-            <option value="方向與交通">10. 方向與交通 (10組)</option>
-        </select>
+        <!-- 目標語言選單 -->
+        <div class="control-group">
+            <span class="control-label" id="lblTargetLang">我想學習的語言</span>
+            <select id="targetLangSelect" onchange="renderCard()">
+                <!-- 動態注入 -->
+            </select>
+        </div>
 
-        <!-- 語言選擇器 -->
-        <select id="langSelect" onchange="updateCardDisplay()">
-            <option value="zh">主語言：中文</option>
-            <option value="en">Main: English</option>
-            <option value="vi">Chính: Tiếng Việt</option>
-            <option value="id">Utama: B. Indonesia</option>
-            <option value="balinese">Utama: Basa Bali</option>
-        </select>
-
-        <!-- 語音性別選擇器 -->
-        <select id="genderSelect">
-            <option value="female">語音性別：女聲 (偏好)</option>
-            <option value="male">語音性別：男聲 (偏好)</option>
-        </select>
+        <!-- 主題分類選單 -->
+        <div class="control-group">
+            <span class="control-label" id="lblCategory">主題分類</span>
+            <select id="categorySelect" onchange="filterCategory()">
+                <!-- 動態注入 -->
+            </select>
+        </div>
     </div>
 
     <div class="card-container" onclick="flipCard()">
         <div class="card" id="card">
-            <!-- 正面 -->
+            <!-- 正面：目標語言 -->
             <div class="card-face">
                 <span class="badge" id="cardCategory">分類</span>
                 <div class="main-word">
-                    <h2 id="frontWord">單字</h2>
-                    <p class="phonetic" id="frontPhonetic">拼音</p>
+                    <h2 id="frontWord">Target Word</h2>
+                    <p class="phonetic" id="frontPhonetic">[ Phonetic ]</p>
                 </div>
-                <button class="audio-btn" onclick="event.stopPropagation(); playSpeech();">🔊 發音</button>
+                <button class="audio-btn" onclick="event.stopPropagation(); playTargetWordAudio();">
+                    🔊 <span id="btnWordAudioText">單字發音</span>
+                </button>
             </div>
 
-            <!-- 反面 -->
+            <!-- 反面：母語翻譯 + 實用例句 -->
             <div class="card-back card-face">
-                <div class="lang-list" id="backLangList"></div>
-                <div class="note-box" id="noteBox"></div>
+                <span class="badge" id="cardCategoryBack">分類</span>
+                <div class="back-content">
+                    <div class="native-meaning" id="backNativeWord">母語意思</div>
+                    
+                    <div class="example-box">
+                        <span class="example-label" id="lblExampleTitle">目標語實用例句：</span>
+                        <div class="example-text" id="backTargetExample">Example Sentence</div>
+                    </div>
+
+                    <div class="note-box" id="noteBox"></div>
+                </div>
+                <button class="audio-btn" onclick="event.stopPropagation(); playTargetExampleAudio();">
+                    🔊 <span id="btnExampleAudioText">例句朗讀</span>
+                </button>
             </div>
         </div>
     </div>
 
-    <p class="hint">💡 點擊卡片可翻面查看全語言對照與例句</p>
+    <p class="hint" id="uiHint">💡 點擊卡片即可翻面查看意思與例句</p>
 
     <div class="nav-buttons">
-        <button class="nav-btn" onclick="prevCard()">上一張</button>
-        <span id="cardProgress" style="align-self: center; color: var(--text-sub);">1 / 1</span>
-        <button class="nav-btn" onclick="nextCard()">下一張</button>
+        <button class="nav-btn" id="btnPrev" onclick="prevCard()">上一張</button>
+        <span id="cardProgress" style="align-self: center; color: var(--text-sub); font-weight: 600;">1 / 1</span>
+        <button class="nav-btn" id="btnNext" onclick="nextCard()">下一張</button>
     </div>
 
     <script>
+        // 身份切換與多語介面設定
+        let currentRole = 'zh';
+
+        const uiI18n = {
+            zh: {
+                title: "飯店餐飲多語學習字卡",
+                subtitle: "跨國團隊現場溝通與語言學習工具",
+                lblTargetLang: "我想學習的語言 (Target Language)",
+                lblCategory: "主題分類 (Category)",
+                btnWordAudio: "單字發音",
+                btnExampleAudio: "例句朗讀",
+                lblExampleTitle: "目標語實用例句：",
+                hint: "💡 點擊卡片即可翻面查看意思與例句",
+                btnPrev: "上一張",
+                btnNext: "下一張",
+                allCat: "所有主題分類 (全收錄)",
+                targetOptions: [
+                    { value: "vi", text: "🇻🇳 越南語 (Tiếng Việt)" },
+                    { value: "id", text: "🇮🇩 印尼語 (Bahasa Indonesia)" },
+                    { value: "balinese", text: "🇮🇩 峇里島語 (Basa Bali)" }
+                ],
+                categories: {
+                    "顧客接待": "1. 顧客接待與問候 (10組)",
+                    "職場團隊溝通": "2. 職場團隊溝通 (15組)",
+                    "日常生活關懷": "3. 日常生活與關懷 (10組)",
+                    "生活需求指示": "4. 生活需求與指示 (10組)",
+                    "現場請託協助": "5. 現場請託與協助 (10組)",
+                    "基礎數字": "6. 基礎數字 (10組)",
+                    "進階數字與結帳": "7. 進階數字與結帳 (10組)",
+                    "餐飲與點餐": "8. 餐飲與點餐 (10組)",
+                    "稱呼與日常應答": "9. 稱呼與日常應答 (10組)",
+                    "方向與交通": "10. 方向與交通 (10組)"
+                }
+            },
+            vi: {
+                title: "Thẻ học đa ngôn ngữ Nhà hàng & Khách sạn",
+                subtitle: "Công cụ học ngôn ngữ & giao tiếp cho đội ngũ",
+                lblTargetLang: "Ngôn ngữ muốn học (Target)",
+                lblCategory: "Danh mục chủ đề (Category)",
+                btnWordAudio: "Phát âm từ",
+                btnExampleAudio: "Đọc câu ví dụ",
+                lblExampleTitle: "Câu ví dụ thực tế:",
+                hint: "💡 Nhấp vào thẻ để lật xem nghĩa và ví dụ",
+                btnPrev: "Trang trước",
+                btnNext: "Trang sau",
+                allCat: "Tất cả danh mục",
+                targetOptions: [
+                    { value: "zh", text: "🇹🇼 Tiếng Trung (中文)" },
+                    { value: "id", text: "🇮🇩 Tiếng Indonesia" }
+                ],
+                categories: {
+                    "顧客接待": "1. Đón tiếp khách (10)",
+                    "職場團隊溝通": "2. Giao tiếp đồng nghiệp (15)",
+                    "日常生活關懷": "3. Quan tâm hàng ngày (10)",
+                    "生活需求指示": "4. Nhu cầu sinh hoạt (10)",
+                    "現場請託協助": "5. Yêu cầu hỗ trợ (10)",
+                    "基礎數字": "6. Con số cơ bản (10)",
+                    "進階數字與結帳": "7. Con số & Thanh toán (10)",
+                    "餐飲與點餐": "8. Ẩm thực & Gọi món (10)",
+                    "稱呼與日常應答": "9. Xưng hô & Trả lời (10)",
+                    "方向與交通": "10. Phương hướng (10)"
+                }
+            },
+            id: {
+                title: "Kartu Belajar Bahasa Restoran & Hotel",
+                subtitle: "Alat Komunikasi & Belajar Bahasa Tim Lapangan",
+                lblTargetLang: "Bahasa yang Ingin Dipelajari",
+                lblCategory: "Kategori Topik (Category)",
+                btnWordAudio: "Suara Kata",
+                btnExampleAudio: "Suara Kalimat",
+                lblExampleTitle: "Contoh Kalimat Praktis:",
+                hint: "💡 Klik kartu untuk membalik & melihat arti",
+                btnPrev: "Sebelumnya",
+                btnNext: "Selanjutnya",
+                allCat: "Semua Kategori",
+                targetOptions: [
+                    { value: "zh", text: "🇹🇼 Mandarin (中文)" },
+                    { value: "vi", text: "🇻🇳 Vietnam (Tiếng Việt)" }
+                ],
+                categories: {
+                    "顧客接待": "1. Menyambut Tamu (10)",
+                    "職場團隊溝通": "2. Komunikasi Tim (15)",
+                    "日常生活關懷": "3. Perhatian Harian (10)",
+                    "生活需求指示": "4. Kebutuhan Sehari-hari (10)",
+                    "現場請託協助": "5. Bantuan Lapangan (10)",
+                    "基礎數字": "6. Angka Dasar (10)",
+                    "進階數字與結帳": "7. Angka & Pembayaran (10)",
+                    "餐飲與點餐": "8. Makanan & Pesanan (10)",
+                    "稱呼與日常應答": "9. Panggilan & Jawaban (10)",
+                    "方向與交通": "10. Arah & Transportasi (10)"
+                }
+            }
+        };
+
         const allFlashcards = [
             // --- 1. 顧客接待與問候 (10組) ---
             {
@@ -210,9 +472,54 @@
                 "note": "上菜完畢時的結尾敬語。"
             },
 
-            // --- 2. 職場團隊溝通 (10組) ---
+            // --- 2. 職場團隊溝通 (含新增單字，共15組) ---
             {
                 "id": "team_001", "category": "職場團隊溝通",
+                "zh": { "word": "上班", "phonetic": "shàng bān", "example": "我今天早上八點上班。" },
+                "en": { "word": "Start work / Clock in", "phonetic": "start werk", "example": "I start work at 8 AM today." },
+                "vi": { "word": "Vào ca / Đi làm", "phonetic": "vao ca / di lam", "example": "Hôm nay tôi vào ca lúc 8 giờ sáng." },
+                "id": { "word": "Masuk kerja", "phonetic": "ma-suk ker-ja", "example": "Saya masuk kerja jam 8 pagi hari ini." },
+                "balinese": { "word": "Ngawit makarya", "phonetic": "nga-wit ma-kar-ya", "example": "Titiang ngawit makarya jam 8 semeng." },
+                "note": "打卡或報到時使用。"
+            },
+            {
+                "id": "team_002", "category": "職場團隊溝通",
+                "zh": { "word": "下班", "phonetic": "xià bān", "example": "我處理完這桌就可以下班了。" },
+                "en": { "word": "Off work / Clock out", "phonetic": "off werk", "example": "I can go off work after finishing this table." },
+                "vi": { "word": "Tan ca / Tan làm", "phonetic": "tan ca / tan lam", "example": "Tôi dọn xong bàn này là tan ca." },
+                "id": { "word": "Pulang kerja / Selesai shift", "phonetic": "pu-lang ker-ja", "example": "Saya bisa pulang kerja setelah meja ini selesai." },
+                "balinese": { "word": "Mawali / Selesai makarya", "phonetic": "ma-wa-li", "example": "Titiang mawali ampun selesai meja puniki." },
+                "note": "交接班或準備離場時使用。"
+            },
+            {
+                "id": "team_003", "category": "職場團隊溝通",
+                "zh": { "word": "我想去喝水", "phonetic": "wǒ xiǎng qù hē shuǐ", "example": "主管，我有點口渴，我想去喝水。" },
+                "en": { "word": "I'd like to drink water", "phonetic": "eye wud lik tuh drink waw-ter", "example": "Manager, I am thirsty, I'd like to drink water." },
+                "vi": { "word": "Tôi muốn đi uống nước", "phonetic": "toi muon di uong nuoc", "example": "Quản lý ơi, tôi hơi khát, tôi muốn đi uống nước." },
+                "id": { "word": "Saya mau minum air", "phonetic": "sa-ya mau mi-num a-ir", "example": "Pak/Bu, saya haus, saya mau minum air." },
+                "balinese": { "word": "Titiang maseduk toya", "phonetic": "ti-tiang ma-se-duk toy-a", "example": "Ampura, titiang jagi maseduk toya." },
+                "note": "現場暫離喝水時報備。"
+            },
+            {
+                "id": "team_004", "category": "職場團隊溝通",
+                "zh": { "word": "我想去上廁所", "phonetic": "wǒ xiǎng qù shàng cè suǒ", "example": "不好意思，我想去上廁所，馬上回來。" },
+                "en": { "word": "I'd like to go to the restroom", "phonetic": "eye wud lik tuh goh tuh thuh rest-room", "example": "Excuse me, I need to go to the restroom, back soon." },
+                "vi": { "word": "Tôi muốn đi vệ sinh", "phonetic": "toi muon di ve sinh", "example": "Xin lỗi, tôi muốn đi vệ sinh một chút ạ." },
+                "id": { "word": "Saya mau ke toilet", "phonetic": "sa-ya mau ke toi-let", "example": "Permisi, saya mau ke toilet sebentar, segera kembali." },
+                "balinese": { "word": "Titiang jagi ka kamar mandi", "phonetic": "ti-tiang ja-gi ka ka-mar man-di", "example": "Ampura, titiang jagi ka kamar mandi abosbos." },
+                "note": "現場暫離上洗手間時報備。"
+            },
+            {
+                "id": "team_005", "category": "職場團隊溝通",
+                "zh": { "word": "請協助我 / 請幫我", "phonetic": "qǐng xié zhù wǒ", "example": "這個托盤有點重，請協助我一下。" },
+                "en": { "word": "Please assist me", "phonetic": "pleez uh-sist mee", "example": "This tray is heavy, please assist me." },
+                "vi": { "word": "Xin hỗ trợ tôi / Giúp tôi với", "phonetic": "sin ho tro toi", "example": "Khay này hơi nặng, xin hỗ trợ tôi với." },
+                "id": { "word": "Tolong bantu saya", "phonetic": "to-long ban-tu sa-ya", "example": "Nampan ini lumayan berat, tolong bantu saya." },
+                "balinese": { "word": "Nunas wantu titiang", "phonetic": "nu-nas wan-tu ti-tiang", "example": "Ampura, nunas wantu titiang abosbos." },
+                "note": "現場忙碌請求同仁支援。"
+            },
+            {
+                "id": "team_006", "category": "職場團隊溝通",
                 "zh": { "word": "收到 / 了解", "phonetic": "shōu dào / liǎo jiě", "example": "收到，這桌立刻補水。" },
                 "en": { "word": "Got it / Understood", "phonetic": "got it / uhn-der-stood", "example": "Got it, I will refill the water right away." },
                 "vi": { "word": "Đã hiểu / Rõ rồi", "phonetic": "da hieu / ro roi", "example": "Rõ rồi, tôi sẽ rót nước ngay." },
@@ -221,7 +528,7 @@
                 "note": "職場接受指令時的回報用語。"
             },
             {
-                "id": "team_002", "category": "職場團隊溝通",
+                "id": "team_007", "category": "職場團隊溝通",
                 "zh": { "word": "沒問題 / 好", "phonetic": "méi wèn tí", "example": "沒問題，交給我來設定桌面。" },
                 "en": { "word": "No problem / Okay", "phonetic": "noh prob-luhm", "example": "No problem, I will set up the table." },
                 "vi": { "word": "Không vấn đề / Được", "phonetic": "khong van de", "example": "Không vấn đề, để tôi dọn bàn." },
@@ -230,16 +537,7 @@
                 "note": "肯定與承接任務用語。"
             },
             {
-                "id": "team_003", "category": "職場團隊溝通",
-                "zh": { "word": "請幫忙一下", "phonetic": "qǐng bāng máng yī xià", "example": "這區客人較多，請幫忙收拾一下。" },
-                "en": { "word": "Please help", "phonetic": "pleez help", "example": "It's busy here, please help clear the tables." },
-                "vi": { "word": "Cần giúp đỡ", "phonetic": "can giup do", "example": "Khu này đông quá, cần giúp đỡ dọn dẹp." },
-                "id": { "word": "Tolong bantu", "phonetic": "to-long ban-tu", "example": "Area ini ramai, tolong bantu bersihkan." },
-                "balinese": { "word": "Nunas wantuan", "phonetic": "nu-nas wan-tu-an", "example": "Nunas wantuan ngresikin meja puniki." },
-                "note": "請求同事支援的敬語。"
-            },
-            {
-                "id": "team_004", "category": "職場團隊溝通",
+                "id": "team_008", "category": "職場團隊溝通",
                 "zh": { "word": "準備好了", "phonetic": "zhǔn bèi hǎo le", "example": "6號桌的套餐已經準備好了。" },
                 "en": { "word": "Ready", "phonetic": "red-ee", "example": "The meal for table 6 is ready." },
                 "vi": { "word": "Đã sẵn sàng", "phonetic": "da san sang", "example": "Món ăn bàn số 6 đã sẵn sàng." },
@@ -248,7 +546,7 @@
                 "note": "出餐或準備工作完成時回報。"
             },
             {
-                "id": "team_005", "category": "職場團隊溝通",
+                "id": "team_009", "category": "職場團隊溝通",
                 "zh": { "word": "還沒好 / 請稍候", "phonetic": "hái méi hǎo", "example": "甜點還沒好，請再等兩分鐘。" },
                 "en": { "word": "Not ready yet", "phonetic": "not red-ee yet", "example": "The dessert is not ready yet, please wait 2 minutes." },
                 "vi": { "word": "Chưa xong", "phonetic": "chua song", "example": "Món tráng miệng chưa xong, đợi thêm 2 phút." },
@@ -257,7 +555,7 @@
                 "note": "廚房或備餐狀態回報。"
             },
             {
-                "id": "team_006", "category": "職場團隊溝通",
+                "id": "team_010", "category": "職場團隊溝通",
                 "zh": { "word": "借過 / 打擾一下", "phonetic": "jiè guò", "example": "手上端湯，借過一下，小心燙。" },
                 "en": { "word": "Excuse me", "phonetic": "ek-skyooz mee", "example": "Excuse me, hot soup coming through." },
                 "vi": { "word": "Xin lỗi / Cho qua", "phonetic": "sin loi / cho qua", "example": "Xin lỗi cho tôi qua, canh nóng ạ." },
@@ -266,7 +564,7 @@
                 "note": "端餐或經過狹窄走道時提醒同事。"
             },
             {
-                "id": "team_007", "category": "職場團隊溝通",
+                "id": "team_011", "category": "職場團隊溝通",
                 "zh": { "word": "小心 / 注意安全", "phonetic": "xiǎo xīn", "example": "地上有水，請小心行走。" },
                 "en": { "word": "Be careful", "phonetic": "bee kair-fuhl", "example": "Floor is wet, please be careful." },
                 "vi": { "word": "Cẩn thận", "phonetic": "can than", "example": "Sàn ướt, cẩn thận kẻo trượt." },
@@ -275,7 +573,7 @@
                 "note": "職場安全警示用語。"
             },
             {
-                "id": "team_008", "category": "職場團隊溝通",
+                "id": "team_012", "category": "職場團隊溝通",
                 "zh": { "word": "辛苦了", "phonetic": "xīn kǔ le", "example": "今天大家辛苦了，表現得很好！" },
                 "en": { "word": "Good job", "phonetic": "good job", "example": "Great job today, everyone!" },
                 "vi": { "word": "Vất vả rồi", "phonetic": "vat va roi", "example": "Hôm nay mọi người vất vả rồi." },
@@ -284,7 +582,7 @@
                 "note": "餐期結束或下班時慰勞同事用語。"
             },
             {
-                "id": "team_009", "category": "職場團隊溝通",
+                "id": "team_013", "category": "職場團隊溝通",
                 "zh": { "word": "我處理 / 我來", "phonetic": "wǒ chǔ lǐ", "example": "這桌的特別需求交給我處理。" },
                 "en": { "word": "I will handle it", "phonetic": "eye wil han-dl it", "example": "I will handle the special request for this table." },
                 "vi": { "word": "Để tôi làm", "phonetic": "de toi lam", "example": "Yêu cầu đặc biệt này để tôi làm." },
@@ -293,13 +591,22 @@
                 "note": "主動承擔任務時使用。"
             },
             {
-                "id": "team_010", "category": "職場團隊溝通",
+                "id": "team_014", "category": "職場團隊溝通",
                 "zh": { "word": "走菜 / 出餐", "phonetic": "zǒu cài / chū cān", "example": "廚房注意，3號桌開始走菜！" },
                 "en": { "word": "Serve dishes", "phonetic": "serv dish-ez", "example": "Kitchen attention, serve dishes for table 3!" },
                 "vi": { "word": "Lên món", "phonetic": "len mon", "example": "Bếp chú ý, bắt đầu lên món bàn 3!" },
                 "id": { "word": "Jalan makanan", "phonetic": "ja-lan ma-ka-nan", "example": "Dapur perhatian, mulai jalan makanan meja 3!" },
                 "balinese": { "word": "Ngaturang ajengan", "phonetic": "ngat-u-rang a-jeng-an", "example": "Durusang ngaturang ajengan meja 3!" },
                 "note": "內外場出餐對接指令。"
+            },
+            {
+                "id": "team_015", "category": "職場團隊溝通",
+                "zh": { "word": "開會 / 集合", "phonetic": "kāi huì / jí hé", "example": "各位夥伴，勤前會集合！" },
+                "en": { "word": "Briefing / Meeting", "phonetic": "breef-ing", "example": "Everyone, time for the pre-shift briefing!" },
+                "vi": { "word": "Họp / Tập hợp", "phonetic": "hop / tap hop", "example": "Mọi người ơi, tập hợp họp đầu ca!" },
+                "id": { "word": "Kumpul / Briefing", "phonetic": "kum-pul", "example": "Semuanya, ayo kumpul untuk briefing!" },
+                "balinese": { "word": "Mupul sareng sami", "phonetic": "mu-pul sa-reng sa-mi", "example": "Ngiring mupul sareng sami mangkin." },
+                "note": "集合宣導或勤前會召集。"
             },
 
             // --- 3. 日常生活關懷 (10組) ---
@@ -1041,16 +1348,45 @@
 
         let filteredCards = [...allFlashcards];
         let currentIndex = 0;
-        let availableVoices = [];
 
-        function loadVoices() {
-            if ('speechSynthesis' in window) {
-                availableVoices = window.speechSynthesis.getVoices();
-            }
-        }
-        if ('speechSynthesis' in window) {
-            window.speechSynthesis.onvoiceschanged = loadVoices;
-            loadVoices();
+        // 點選身份快捷鈕
+        function setRole(role) {
+            currentRole = role;
+
+            document.getElementById('btnRoleTW').classList.toggle('active', role === 'zh');
+            document.getElementById('btnRoleVI').classList.toggle('active', role === 'vi');
+            document.getElementById('btnRoleID').classList.toggle('active', role === 'id');
+
+            const config = uiI18n[role];
+
+            document.getElementById('uiTitle').innerText = config.title;
+            document.getElementById('uiSubtitle').innerText = config.subtitle;
+            document.getElementById('lblTargetLang').innerText = config.lblTargetLang;
+            document.getElementById('lblCategory').innerText = config.lblCategory;
+            document.getElementById('btnWordAudioText').innerText = config.btnWordAudio;
+            document.getElementById('btnExampleAudioText').innerText = config.btnExampleAudio;
+            document.getElementById('lblExampleTitle').innerText = config.lblExampleTitle;
+            document.getElementById('uiHint').innerText = config.hint;
+            document.getElementById('btnPrev').innerText = config.btnPrev;
+            document.getElementById('btnNext').innerText = config.btnNext;
+
+            const targetSelect = document.getElementById('targetLangSelect');
+            let targetHtml = "";
+            config.targetOptions.forEach(opt => {
+                targetHtml += `<option value="${opt.value}">${opt.text}</option>`;
+            });
+            targetSelect.innerHTML = targetHtml;
+
+            const catSelect = document.getElementById('categorySelect');
+            let catHtml = `<option value="ALL">${config.allCat}</option>`;
+            const catKeys = ["顧客接待", "職場團隊溝通", "日常生活關懷", "生活需求指示", "現場請託協助", "基礎數字", "進階數字與結帳", "餐飲與點餐", "稱呼與日常應答", "方向與交通"];
+            catKeys.forEach(key => {
+                const label = config.categories[key] || key;
+                catHtml += `<option value="${key}">${label}</option>`;
+            });
+            catSelect.innerHTML = catHtml;
+
+            filterCategory();
         }
 
         function filterCategory() {
@@ -1067,26 +1403,22 @@
         function renderCard() {
             if (filteredCards.length === 0) return;
             const cardData = filteredCards[currentIndex];
-            const currentLang = document.getElementById('langSelect').value;
-            const langObj = cardData[currentLang] || cardData['zh'];
+            const targetLang = document.getElementById('targetLangSelect').value;
+            const nativeLang = currentRole;
 
-            document.getElementById('cardCategory').innerText = cardData.category || "一般";
-            document.getElementById('frontWord').innerText = langObj.word;
-            document.getElementById('frontPhonetic').innerText = langObj.phonetic ? `[ ${langObj.phonetic} ]` : "";
+            const targetObj = cardData[targetLang] || cardData['zh'];
+            const nativeObj = cardData[nativeLang] || cardData['zh'];
+            const config = uiI18n[nativeLang];
 
-            const langNames = { zh: "中文", en: "English", vi: "Tiếng Việt", id: "Bahasa Indonesia", balinese: "Basa Bali (敬語)" };
-            let backHtml = "";
-            for (let langKey in langNames) {
-                if (cardData[langKey]) {
-                    backHtml += `
-                        <div class="lang-item">
-                            <span class="lang-label">${langNames[langKey]}</span>
-                            <div class="lang-text">${cardData[langKey].word} <small style="color:var(--gold-color)">${cardData[langKey].phonetic ? '(' + cardData[langKey].phonetic + ')' : ''}</small></div>
-                            <div class="lang-example">${cardData[langKey].example || ''}</div>
-                        </div>`;
-                }
-            }
-            document.getElementById('backLangList').innerHTML = backHtml;
+            const catLabel = (config.categories && config.categories[cardData.category]) ? config.categories[cardData.category] : cardData.category;
+            document.getElementById('cardCategory').innerText = catLabel;
+            document.getElementById('cardCategoryBack').innerText = catLabel;
+
+            document.getElementById('frontWord').innerText = targetObj.word;
+            document.getElementById('frontPhonetic').innerText = targetObj.phonetic ? `[ ${targetObj.phonetic} ]` : "";
+
+            document.getElementById('backNativeWord').innerText = nativeObj.word;
+            document.getElementById('backTargetExample').innerText = targetObj.example || nativeObj.example || "";
 
             const noteBox = document.getElementById('noteBox');
             if (cardData.note) {
@@ -1100,49 +1432,37 @@
         }
 
         function flipCard() { document.getElementById('card').classList.toggle('flipped'); }
-        function updateCardDisplay() { renderCard(); }
         function prevCard() { if (currentIndex > 0) { currentIndex--; resetFlipAndRender(); } }
         function nextCard() { if (currentIndex < filteredCards.length - 1) { currentIndex++; resetFlipAndRender(); } }
         function resetFlipAndRender() { document.getElementById('card').classList.remove('flipped'); setTimeout(renderCard, 150); }
 
-        function playSpeech() {
-            const currentLang = document.getElementById('langSelect').value;
-            const preferredGender = document.getElementById('genderSelect').value;
+        function playTargetWordAudio() {
+            const targetLang = document.getElementById('targetLangSelect').value;
             const cardData = filteredCards[currentIndex];
-            const text = cardData[currentLang] ? cardData[currentLang].word : cardData['zh'].word;
+            const text = (cardData[targetLang] ? cardData[targetLang].word : cardData['zh'].word);
+            speakText(text, targetLang);
+        }
 
-            const langCodeMap = { zh: 'zh-TW', en: 'en-US', vi: 'vi-VN', id: 'id-ID', balinese: 'id-ID' };
-            const targetLang = langCodeMap[currentLang] || 'zh-TW';
+        function playTargetExampleAudio() {
+            const targetLang = document.getElementById('targetLangSelect').value;
+            const cardData = filteredCards[currentIndex];
+            const text = (cardData[targetLang] ? cardData[targetLang].example : cardData['zh'].example);
+            speakText(text, targetLang);
+        }
 
+        function speakText(text, langKey) {
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
                 const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = targetLang;
-
-                if (availableVoices.length === 0) loadVoices();
-                const matchedVoices = availableVoices.filter(v => v.lang.replace('_', '-').toLowerCase().startsWith(targetLang.slice(0, 2).toLowerCase()));
-
-                if (matchedVoices.length > 0) {
-                    let chosenVoice = matchedVoices.find(v => {
-                        const name = v.name.toLowerCase();
-                        if (preferredGender === 'male') {
-                            return name.includes('male') || name.includes('david') || name.includes('george') || name.includes('kangkang') || name.includes('boy') || name.includes('man');
-                        } else {
-                            return name.includes('female') || name.includes('zira') || name.includes('yating') || name.includes('hsiao') || name.includes('girl') || name.includes('woman') || name.includes('mei-jia');
-                        }
-                    });
-
-                    if (!chosenVoice) chosenVoice = matchedVoices[0];
-                    utterance.voice = chosenVoice;
-                }
-
+                const langCodeMap = { zh: 'zh-TW', en: 'en-US', vi: 'vi-VN', id: 'id-ID', balinese: 'id-ID' };
+                utterance.lang = langCodeMap[langKey] || 'zh-TW';
                 window.speechSynthesis.speak(utterance);
             } else {
-                alert("您的瀏覽器不支援語音播放功能。");
+                alert("Your browser does not support text-to-speech.");
             }
         }
 
-        renderCard();
+        setRole('zh');
     </script>
 </body>
 </html>
