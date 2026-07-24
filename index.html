@@ -59,10 +59,20 @@
     <div class="controls">
         <!-- 分類選擇器 -->
         <select id="categorySelect" onchange="filterCategory()">
-            <option value="ALL">所有主題分類 (共 40 組)</option>
+            <option value="ALL">所有主題分類</option>
             <option value="顧客接待">模組一：顧客接待與問候</option>
             <option value="職場團隊溝通">模組四：職場團隊溝通</option>
             <option value="日常生活關懷">模組：日常生活與關懷</option>
+            <option value="生活需求指示">模組：生活需求與指示</option>
+            <option value="現場請託協助">模組：現場請託與協助</option>
+            <option value="數字">模組：數字學習</option>
+            <option value="餐飲與點餐">模組：餐飲與點餐</option>
+            <option value="旅遊與交通">模組：旅遊與交通</option>
+            <option value="稱呼與日常">模組：稱呼與日常</option>
+            <option value="問候與方向">模組：問候與方向</option>
+            <option value="狀態與進階數字">模組：狀態與進階數字</option>
+            <option value="進階數字與結帳">模組：進階數字與結帳</option>
+            <option value="職場與團隊">模組：職場與團隊</option>
         </select>
 
         <!-- 語言選擇器 -->
@@ -72,6 +82,12 @@
             <option value="vi">Chính: Tiếng Việt</option>
             <option value="id">Utama: B. Indonesia</option>
             <option value="balinese">Utama: Basa Bali</option>
+        </select>
+
+        <!-- 語音性別選擇器 -->
+        <select id="genderSelect">
+            <option value="female">語音性別：女聲 (偏好)</option>
+            <option value="male">語音性別：男聲 (偏好)</option>
         </select>
     </div>
 
@@ -105,7 +121,7 @@
 
     <script>
         const allFlashcards = [
-            // --- 模組一：顧客接待與問候 ---
+            // --- 顧客接待與問候 ---
             {
                 "id": "recv_001", "category": "顧客接待",
                 "zh": { "word": "歡迎光臨", "phonetic": "huān yíng guāng lín", "example": "歡迎光臨，請問今天有預約嗎？" },
@@ -142,98 +158,57 @@
                 "balinese": { "word": "Rahajeng wengi", "phonetic": "ra-ha-jeng weng-i", "example": "Rahajeng wengi, suksma sampun rauh." },
                 "note": "晚餐時段接待與道別用語。"
             },
+
+            // --- 數字模組 ---
             {
-                "id": "recv_005", "category": "顧客接待",
-                "zh": { "word": "請問幾位？", "phonetic": "qǐng wèn jǐ wèi", "example": "貴賓您好，請問今天一共幾位用餐？" },
-                "en": { "word": "How many guests?", "phonetic": "how meh-nee gests", "example": "Hello, how many guests are dining today?" },
-                "vi": { "word": "Mấy người ạ?", "phonetic": "may nguoi a", "example": "Xin chào, quý khách đi mấy người ạ?" },
-                "id": { "word": "Berapa orang?", "phonetic": "be-ra-pa o-rang", "example": "Halo, untuk berapa orang?" },
-                "balinese": { "word": "Kuda sangraha?", "phonetic": "ku-da sang-ra-ha", "example": "Om Swastyastu, kuda sangraha majengan?" },
-                "note": "帶位時詢問人數的核心單字。"
+                "id": "num_001", "category": "數字",
+                "zh": {"word": "一", "phonetic": "yī", "example": "一位客人。"},
+                "en": {"word": "One", "phonetic": "wuhn", "example": "One guest."},
+                "vi": {"word": "Một", "phonetic": "moht", "example": "Một khách."},
+                "id": {"word": "Satu", "phonetic": "sa-tu", "example": "Satu tamu."},
+                "balinese": {"word": "Asiki", "phonetic": "a-si-ki", "example": "Tamiu asiki."},
+                "note": "數字 1，敬語為 Asiki"
             },
             {
-                "id": "recv_006", "category": "顧客接待",
-                "zh": { "word": "請跟我來 / 這邊請", "phonetic": "qǐng gēn wǒ lái", "example": "好的，請跟我來，為您安排靠窗座位。" },
-                "en": { "word": "This way, please", "phonetic": "this way pleez", "example": "Right this way, please. Here is your window seat." },
-                "vi": { "word": "Lối này ạ", "phonetic": "loi nay a", "example": "Vui lòng đi theo tôi sang lối này ạ." },
-                "id": { "word": "Silakan lewat sini", "phonetic": "si-la-kan le-wat si-ni", "example": "Mari, silakan lewat sini." },
-                "balinese": { "word": "Durusang ngiring titiang", "phonetic": "du-ru-sang ngi-ring ti-tiang", "example": "Durusang ngiring titiang ka meja." },
-                "note": "帶位引導用語。"
+                "id": "num_002", "category": "數字",
+                "zh": {"word": "二", "phonetic": "èr", "example": "兩份餐。"},
+                "en": {"word": "Two", "phonetic": "too", "example": "Two portions."},
+                "vi": {"word": "Hai", "phonetic": "hai", "example": "Hai phần."},
+                "id": {"word": "Dua", "phonetic": "du-a", "example": "Dua porsi."},
+                "balinese": {"word": "Kalih", "phonetic": "ka-lih", "example": "Kalih porsi."},
+                "note": "數字 2，敬語為 Kalih"
             },
             {
-                "id": "recv_007", "category": "顧客接待",
-                "zh": { "word": "請坐 / 請進", "phonetic": "qǐng zuò", "example": "座位已經準備好，請坐。" },
-                "en": { "word": "Please sit down", "phonetic": "pleez sit down", "example": "Your table is ready, please have a seat." },
-                "vi": { "word": "Mời ngồi", "phonetic": "moi ngoi", "example": "Bàn đã sẵn sàng, mời quý khách ngồi." },
-                "id": { "word": "Silakan duduk", "phonetic": "si-la-kan du-duk", "example": "Meja sudah siap, silakan duduk." },
-                "balinese": { "word": "Durusang meliang", "phonetic": "du-ru-sang me-li-ang", "example": "Durusang meliang ring meja puniki." },
-                "note": "引導入座禮貌用語。"
-            },
-            {
-                "id": "recv_008", "category": "顧客接待",
-                "zh": { "word": "請稍等片刻", "phonetic": "qǐng shāo děng piàn kè", "example": "好的，請稍等片刻，立刻為您確認。" },
-                "en": { "word": "Just a moment, please", "phonetic": "juhst uh moh-muhnt", "example": "Certainly, just a moment please." },
-                "vi": { "word": "Xin chờ một chút", "phonetic": "sin cho mot chut", "example": "Dạ, xin chờ một chút ạ." },
-                "id": { "word": "Tunggu sebentar", "phonetic": "tung-gu se-ben-tar", "example": "Baik, mohon tunggu sebentar." },
-                "balinese": { "word": "Nunas antos abosbos", "phonetic": "nu-nas an-tos a-bos-bos", "example": "Nunas antos abosbos, titiang mengecek." },
-                "note": "查詢預約或整理座位時使用。"
-            },
-            {
-                "id": "recv_009", "category": "顧客接待",
-                "zh": { "word": "謝謝您 / 非常感謝", "phonetic": "xiè xie nín", "example": "非常感謝您的蒞臨，歡迎再次光臨。" },
-                "en": { "word": "Thank you very much", "phonetic": "thangk yoo veh-ree muhch", "example": "Thank you very much for visiting us." },
-                "vi": { "word": "Cảm ơn rất nhiều", "phonetic": "cam on rat nhieu", "example": "Cảm ơn quý khách rất nhiều." },
-                "id": { "word": "Terima kasih banyak", "phonetic": "te-ri-ma ka-sih ba-nyak", "example": "Terima kasih banyak atas kunjungan Anda." },
-                "balinese": { "word": "Suksma banget", "phonetic": "suks-ma ba-nget", "example": "Suksma banget sampun rauh." },
-                "note": "致謝與離場送客用語。"
-            },
-            {
-                "id": "recv_010", "category": "顧客接待",
-                "zh": { "word": "不客氣", "phonetic": "bù kè qì", "example": "不客氣，這是我應該做的。" },
-                "en": { "word": "You're welcome", "phonetic": "yoor wel-kuhm", "example": "You're welcome, my pleasure." },
-                "vi": { "word": "Không có gì", "phonetic": "khong co gi", "example": "Dạ không có gì ạ." },
-                "id": { "word": "Sama-sama", "phonetic": "sa-ma sa-ma", "example": "Sama-sama, dengan senang hati." },
-                "balinese": { "word": "Suksma mawali", "phonetic": "suks-ma ma-wa-li", "example": "Suksma mawali, titiang seneng ngawantu." },
-                "note": "回應客人感謝的禮貌用語。"
-            },
-            {
-                "id": "recv_011", "category": "顧客接待",
-                "zh": { "word": "祝您用餐愉快", "phonetic": "zhù nín yòng cān yú kuài", "example": "餐點已全數上齊，祝您用餐愉快。" },
-                "en": { "word": "Enjoy your meal", "phonetic": "en-joi yoor meel", "example": "All dishes are served. Enjoy your meal!" },
-                "vi": { "word": "Chúc ngon miệng", "phonetic": "chuc ngon mieng", "example": "Món ăn đã ra đủ, chúc quý khách ngon miệng." },
-                "id": { "word": "Selamat menikmati", "phonetic": "se-la-mat me-nik-ma-ti", "example": "Makanan sudah lengkap, selamat menikmati." },
-                "balinese": { "word": "Nunas majengan", "phonetic": "nu-nas ma-jeng-an", "example": "Ajengan sampun sayaga, nunas majengan." },
-                "note": "上菜完畢時的結尾敬語。"
-            },
-            {
-                "id": "recv_012", "category": "顧客接待",
-                "zh": { "word": "需要菜單嗎？", "phonetic": "xū yào cài dān ma", "example": "貴賓您好，需要為您遞上菜單嗎？" },
-                "en": { "word": "Would you like a menu?", "phonetic": "wud yoo lik uh meh-nyoo", "example": "Hello, would you like a menu?" },
-                "vi": { "word": "Cần thực đơn không ạ?", "phonetic": "can thuc don khong a", "example": "Xin chào, quý khách có cần thực đơn không ạ?" },
-                "id": { "word": "Mau menu?", "phonetic": "mau me-nu", "example": "Halo, apakah Anda mau menu?" },
-                "balinese": { "word": "Nunas menu?", "phonetic": "nu-nas me-nu", "example": "Om Swastyastu, nunas menu?" },
-                "note": "入座後點餐詢問。"
-            },
-            {
-                "id": "recv_013", "category": "顧客接待",
-                "zh": { "word": "這邊請結帳", "phonetic": "zhè biān qǐng jié zhàng", "example": "買單請至櫃檯，這邊請。" },
-                "en": { "word": "Bill, please / Pay here", "phonetic": "pay heer", "example": "Please pay at the counter, this way." },
-                "vi": { "word": "Thanh toán ở đây ạ", "phonetic": "thanh toan o day a", "example": "Mời quý khách thanh toán tại quầy này ạ." },
-                "id": { "word": "Bayar di sini", "phonetic": "ba-yar di si-ni", "example": "Silakan bayar di kasir, lewat sini." },
-                "balinese": { "word": "Mabayar driki", "phonetic": "ma-ba-yar dri-ki", "example": "Durusang mabayar ring kasir driki." },
-                "note": "指引賓客結帳付款。"
-            },
-            {
-                "id": "recv_014", "category": "顧客接待",
-                "zh": { "word": "祝您今天愉快", "phonetic": "zhù nín jīn tiān yú kuài", "example": "謝謝光臨，祝您今天愉快！" },
-                "en": { "word": "Have a nice day", "phonetic": "hav uh nis day", "example": "Thank you for coming, have a nice day!" },
-                "vi": { "word": "Chúc một ngày tốt lành", "phonetic": "chuc mot ngay tot lanh", "example": "Cảm ơn quý khách, chúc một ngày tốt lành!" },
-                "id": { "word": "Semoga hari Anda menyenangkan", "phonetic": "se-mo-ga ha-ri an-da", "example": "Terima kasih, semoga hari Anda menyenangkan!" },
-                "balinese": { "word": "Rahajeng rahinan", "phonetic": "ra-ha-jeng ra-hi-nan", "example": "Suksma, rahajeng rahinan majeng samian." },
-                "note": "賓客離去時的祝福語。"
+                "id": "num_003", "category": "數字",
+                "zh": {"word": "三", "phonetic": "sān", "example": "三杯水。"},
+                "en": {"word": "Three", "phonetic": "three", "example": "Three glasses of water."},
+                "vi": {"word": "Ba", "phonetic": "ba", "example": "Ba ly nước."},
+                "id": {"word": "Tiga", "phonetic": "ti-ga", "example": "Tiga gelas air."},
+                "balinese": {"word": "Tiga", "phonetic": "ti-ga", "example": "Tiga toya."},
+                "note": "數字 3，敬語為 Tiga"
             },
 
-            // --- 模組：日常生活與關懷 ---
+            // --- 餐飲與點餐 ---
+            {
+                "id": "rest_011", "category": "餐飲與點餐",
+                "zh": {"word": "美味", "phonetic": "měi wèi", "example": "這很美味。"},
+                "en": {"word": "Delicious", "phonetic": "dih-lish-uhs", "example": "This is delicious."},
+                "vi": {"word": "Ngon", "phonetic": "ngon", "example": "Món này ngon."},
+                "id": {"word": "Enak", "phonetic": "e-nak", "example": "Ini enak."},
+                "balinese": {"word": "Jaen", "phonetic": "ja-en", "example": "Puniki jaen."},
+                "note": "稱讚食物"
+            },
+            {
+                "id": "rest_013", "category": "餐飲與點餐",
+                "zh": {"word": "水", "phonetic": "shuǐ", "example": "請給我水。"},
+                "en": {"word": "Water", "phonetic": "wa-ter", "example": "Water, please."},
+                "vi": {"word": "Nước", "phonetic": "nuoc", "example": "Cho tôi nước."},
+                "id": {"word": "Air", "phonetic": "a-ir", "example": "Minta air."},
+                "balinese": {"word": "Toya", "phonetic": "to-ya", "example": "Nunas toya."},
+                "note": "飲用水"
+            },
+
+            // --- 日常生活關懷 ---
             {
                 "id": "life_001", "category": "日常生活關懷",
                 "zh": { "word": "吃飯了嗎？", "phonetic": "chī fàn le ma", "example": "夥伴早安，你吃飯了嗎？" },
@@ -243,89 +218,8 @@
                 "balinese": { "word": "Sampun ngajeng?", "phonetic": "sam-pun nga-jeng", "example": "Om Swastyastu, sampun ngajeng?" },
                 "note": "最經典且具親切感的日常問候用語。"
             },
-            {
-                "id": "life_002", "category": "日常生活關懷",
-                "zh": { "word": "你需要幫助嗎？ / 我能幫你嗎？", "phonetic": "nǐ xū yào bāng zhù ma", "example": "看你看起來很忙，你需要幫助嗎？" },
-                "en": { "word": "Do you need help?", "phonetic": "doo yoo need help", "example": "You look busy, do you need help?" },
-                "vi": { "word": "Bạn có cần giúp không?", "phonetic": "ban co can giup khong", "example": "Trông bạn bận quá, bạn có cần giúp không?" },
-                "id": { "word": "Butuh bantuan?", "phonetic": "bu-tuh ban-tu-an", "example": "Kamu terlihat sibuk, apakah butuh bantuan?" },
-                "balinese": { "word": "Nunas wantuan?", "phonetic": "nu-nas wan-tu-an", "example": "Sembeton, punapi wenten nunas wantuan?" },
-                "note": "主動關懷同事與問候。"
-            },
-            {
-                "id": "life_003", "category": "日常生活關懷",
-                "zh": { "word": "請幫助我 / 幫我一下", "phonetic": "qǐng bāng zhù wǒ", "example": "這個盤子太重了，請幫助我一下。" },
-                "en": { "word": "Please help me", "phonetic": "pleez help mee", "example": "This tray is too heavy, please help me." },
-                "vi": { "word": "Xin giúp tôi với", "phonetic": "sin giup toi voi", "example": "Khay này nặng quá, xin giúp tôi với." },
-                "id": { "word": "Tolong bantu saya", "phonetic": "to-long ban-tu sa-ya", "example": "Nampan ini berat, tolong bantu saya." },
-                "balinese": { "word": "Nunas wantu titiang", "phonetic": "nu-nas wan-tu ti-tiang", "example": "Ampura, nunas wantu titiang." },
-                "note": "日常向夥伴尋求協助。"
-            },
-            {
-                "id": "life_004", "category": "日常生活關懷",
-                "zh": { "word": "今天好嗎？ / 你好嗎？", "phonetic": "jīn tiān hǎo ma", "example": "嗨！今天工作好嗎？" },
-                "en": { "word": "How are you today?", "phonetic": "how ar yoo tuh-day", "example": "Hi! How are you doing today?" },
-                "vi": { "word": "Hôm nay thế nào?", "phonetic": "hom nay the nao", "example": "Chào bạn, hôm nay thế nào?" },
-                "id": { "word": "Apa kabar hari ini?", "phonetic": "a-pa ka-bar ha-ri i-ni", "example": "Halo, apa kabar hari ini?" },
-                "balinese": { "word": "Punapi gatra?", "phonetic": "pu-na-pi gat-ra", "example": "Om Swastyastu, punapi gatra mangkin?" },
-                "note": "關心夥伴精神狀態的日常用語。"
-            },
-            {
-                "id": "life_005", "category": "日常生活關懷",
-                "zh": { "word": "喝水了嗎？ / 記得喝水", "phonetic": "hē shuǐ le ma", "example": "今天很熱，你喝水了嗎？" },
-                "en": { "word": "Drink water", "phonetic": "drink waw-ter", "example": "It's hot today, remember to drink water." },
-                "vi": { "word": "Uống nước chưa?", "phonetic": "uong nuoc chua", "example": "Hôm nay nóng quá, uống nước chưa?" },
-                "id": { "word": "Sudah minum air?", "phonetic": "su-dah mi-num a-ir", "example": "Hari ini panas, sudah minum air?" },
-                "balinese": { "word": "Sampun nginum toya?", "phonetic": "sam-pun ngi-num toy-a", "example": "Sampun nginum toya, sembeton?" },
-                "note": "貼心關懷夥伴健康用語。"
-            },
-            {
-                "id": "life_006", "category": "日常生活關懷",
-                "zh": { "word": "休息一下吧", "phonetic": "xiū xí yī xià ba", "example": "你忙很久了，去休息一下吧。" },
-                "en": { "word": "Take a break", "phonetic": "tayk uh brayk", "example": "You worked hard, take a break!" },
-                "vi": { "word": "Nghỉ ngơi một chút đi", "phonetic": "nghi ngoi mot chut di", "example": "Bạn làm lâu rồi, nghỉ ngơi một chút đi." },
-                "id": { "word": "Istirahat sebentar", "phonetic": "is-ti-ra-hat se-ben-tar", "example": "Kamu sudah kerja lama, istirahat sebentar." },
-                "balinese": { "word": "Mategahan abosbos", "phonetic": "ma-te-ga-han a-bos-bos", "example": "Durusang mategahan abosbos." },
-                "note": "提醒同仁定時休息的關懷。"
-            },
-            {
-                "id": "life_007", "category": "日常生活關懷",
-                "zh": { "word": "太棒了！ / 加油！", "phonetic": "tài bàng le", "example": "今天的出餐效率太棒了，加油！" },
-                "en": { "word": "Great job! / Keep it up!", "phonetic": "grayt job", "example": "Service was super smooth today, great job!" },
-                "vi": { "word": "Tuyệt vời! / Cố lên!", "phonetic": "tuyet voi / co len", "example": "Hôm nay làm tốt lắm, cố lên!" },
-                "id": { "word": "Bagus sekali! / Semangat!", "phonetic": "ba-gus se-ka-li / se-ma-ngat", "example": "Kerja bagus hari ini, semangat!" },
-                "balinese": { "word": "Becik pisan! / Semangat!", "phonetic": "be-cik pi-san", "example": "Becik pisan makarya, semangat!" },
-                "note": "激勵團隊士氣的精神用語。"
-            },
-            {
-                "id": "life_008", "category": "日常生活關懷",
-                "zh": { "word": "別擔心 / 沒關係", "phonetic": "bié dān xīn", "example": "別擔心，我們是一個團隊，一起解決。" },
-                "en": { "word": "Don't worry / It's okay", "phonetic": "dohnt wur-ee", "example": "Don't worry, we will fix it together." },
-                "vi": { "word": "Đừng lo / Không sao đâu", "phonetic": "dung lo / khong sao dau", "example": "Đừng lo, chúng ta làm cùng nhau." },
-                "id": { "word": "Jangan khawatir / Tidak apa-apa", "phonetic": "ja-ngan kha-wa-tir", "example": "Jangan khawatir, kita tim." },
-                "balinese": { "word": "Sampun kuwatir", "phonetic": "sam-pun ku-wa-tir", "example": "Sampun kuwatir, iraga sareng sami." },
-                "note": "同仁犯錯或不安時的安撫用語。"
-            },
-            {
-                "id": "life_009", "category": "日常生活關懷",
-                "zh": { "word": "你準備好了嗎？", "phonetic": "nǐ zhǔn bèi hǎo le ma", "example": "餐期要開始了，你準備好了嗎？" },
-                "en": { "word": "Are you ready?", "phonetic": "ar yoo red-ee", "example": "The rush is starting, are you ready?" },
-                "vi": { "word": "Bạn chuẩn bị xong chưa?", "phonetic": "ban chuan bi song chua", "example": "Sắp vào ca bận rồi, chuẩn bị xong chưa?" },
-                "id": { "word": "Apakah kamu sudah siap?", "phonetic": "a-pa-kah ka-mu su-dah si-ap", "example": "Jam sibuk mulai, apakah kamu sudah siap?" },
-                "balinese": { "word": "Sampun sayaga?", "phonetic": "sam-pun sa-ya-ga", "example": "Sembeton, sampun sayaga?" },
-                "note": "勤前會或準備進場時詢問。"
-            },
-            {
-                "id": "life_0010", "category": "日常生活關懷",
-                "zh": { "word": "明天見！", "phonetic": "míng tiān jiàn", "example": "今天辛苦了，大家明天見！" },
-                "en": { "word": "See you tomorrow!", "phonetic": "see yoo tuh-mor-oh", "example": "Thanks for your hard work, see you tomorrow!" },
-                "vi": { "word": "Hẹn gặp lại ngày mai!", "phonetic": "hen gap lai ngay mai", "example": "Hôm nay vất vả rồi, hẹn gặp lại ngày mai!" },
-                "id": { "word": "Sampai jumpa besok!", "phonetic": "sam-pai jum-pa be-sok", "example": "Terima kasih untuk hari ini, sampai jumpa besok!" },
-                "balinese": { "word": "Benjang matemu!", "phonetic": "ben-jang ma-te-mu", "example": "Suksma, benjang matemu malih!" },
-                "note": "日常溫馨下班道別用語。"
-            },
 
-            // --- 模組四：職場團隊溝通 ---
+            // --- 職場團隊溝通 ---
             {
                 "id": "team_001", "category": "職場團隊溝通",
                 "zh": { "word": "收到 / 了解", "phonetic": "shōu dào / liǎo jiě", "example": "收到，這桌立刻補水。" },
@@ -334,146 +228,23 @@
                 "id": { "word": "Siap / Mengerti", "phonetic": "si-ap / me-nger-ti", "example": "Siap, saya isi airnya sekarang." },
                 "balinese": { "word": "Sampun uning", "phonetic": "sam-pun u-ning", "example": "Sampun uning, titiang ngurusang." },
                 "note": "職場接受指令時的回報用語。"
-            },
-            {
-                "id": "team_002", "category": "職場團隊溝通",
-                "zh": { "word": "沒問題 / 好", "phonetic": "méi wèn tí", "example": "沒問題，交給我來設定桌面。" },
-                "en": { "word": "No problem / Okay", "phonetic": "noh prob-luhm", "example": "No problem, I will set up the table." },
-                "vi": { "word": "Không vấn đề / Được", "phonetic": "khong van de", "example": "Không vấn đề, để tôi dọn bàn." },
-                "id": { "word": "Tidak masalah / Baik", "phonetic": "ti-dak ma-sa-lah", "example": "Tidak masalah, biar saya set-up mejanya." },
-                "balinese": { "word": "Nenten wenten mawi", "phonetic": "nen-ten wen-ten ma-wi", "example": "Nenten wenten mawi, titiang ngresikin." },
-                "note": "肯定與承接任務用語。"
-            },
-            {
-                "id": "team_003", "category": "職場團隊溝通",
-                "zh": { "word": "請幫忙一下", "phonetic": "qǐng bāng máng yī xià", "example": "這區客人較多，請幫忙收拾一下。" },
-                "en": { "word": "Please help", "phonetic": "pleez help", "example": "It's busy here, please help clear the tables." },
-                "vi": { "word": "Cần giúp đỡ", "phonetic": "can giup do", "example": "Khu này đông quá, cần giúp đỡ dọn dẹp." },
-                "id": { "word": "Tolong bantu", "phonetic": "to-long ban-tu", "example": "Area ini ramai, tolong bantu bersihkan." },
-                "balinese": { "word": "Nunas wantuan", "phonetic": "nu-nas wan-tu-an", "example": "Nunas wantuan ngresikin meja puniki." },
-                "note": "請求同事支援的敬語。"
-            },
-            {
-                "id": "team_004", "category": "職場團隊溝通",
-                "zh": { "word": "準備好了", "phonetic": "zhǔn bèi hǎo le", "example": "6號桌的套餐已經準備好了。" },
-                "en": { "word": "Ready", "phonetic": "red-ee", "example": "The meal for table 6 is ready." },
-                "vi": { "word": "Đã sẵn sàng", "phonetic": "da san sang", "example": "Món ăn bàn số 6 đã sẵn sàng." },
-                "id": { "word": "Sudah siap", "phonetic": "su-dah si-ap", "example": "Pesanan meja 6 sudah siap." },
-                "balinese": { "word": "Sampun sayaga", "phonetic": "sam-pun sa-ya-ga", "example": "Ajengan meja 6 sampun sayaga." },
-                "note": "出餐或準備工作完成時回報。"
-            },
-            {
-                "id": "team_005", "category": "職場團隊溝通",
-                "zh": { "word": "還沒好 / 請稍候", "phonetic": "hái méi hǎo", "example": "甜點還沒好，請再等兩分鐘。" },
-                "en": { "word": "Not ready yet", "phonetic": "not red-ee yet", "example": "The dessert is not ready yet, please wait 2 minutes." },
-                "vi": { "word": "Chưa xong", "phonetic": "chua song", "example": "Món tráng miệng chưa xong, đợi thêm 2 phút." },
-                "id": { "word": "Belum siap", "phonetic": "be-lum si-ap", "example": "Makanan penutup belum siap, tunggu 2 menit lagi." },
-                "balinese": { "word": "Durung sayaga", "phonetic": "du-rung sa-ya-ga", "example": "Ajengan durung sayaga." },
-                "note": "廚房或備餐狀態回報。"
-            },
-            {
-                "id": "team_006", "category": "職場團隊溝通",
-                "zh": { "word": "借過 / 打擾一下", "phonetic": "jiè guò", "example": "手上端湯，借過一下，小心燙。" },
-                "en": { "word": "Excuse me", "phonetic": "ek-skyooz mee", "example": "Excuse me, hot soup coming through." },
-                "vi": { "word": "Xin lỗi / Cho qua", "phonetic": "sin loi / cho qua", "example": "Xin lỗi cho tôi qua, canh nóng ạ." },
-                "id": { "word": "Permisi", "phonetic": "per-mi-si", "example": "Permisi, membawa sup panas." },
-                "balinese": { "word": "Ampura / Numpang lintang", "phonetic": "am-pu-ra / num-pang lin-tang", "example": "Ampura, titiang numpang lintang." },
-                "note": "端餐或經過狹窄走道時提醒同事。"
-            },
-            {
-                "id": "team_007", "category": "職場團隊溝通",
-                "zh": { "word": "小心 / 注意安全", "phonetic": "xiǎo xīn", "example": "地上有水，請小心行走。" },
-                "en": { "word": "Be careful", "phonetic": "bee kair-fuhl", "example": "Floor is wet, please be careful." },
-                "vi": { "word": "Cẩn thận", "phonetic": "can than", "example": "Sàn ướt, cẩn thận kẻo trượt." },
-                "id": { "word": "Hati-hati", "phonetic": "ha-ti ha-ti", "example": "Lantai basah, hati-hati." },
-                "balinese": { "word": "Yatna-yatna", "phonetic": "yat-na yat-na", "example": "Yatna-yatna, lantai basah." },
-                "note": "職場安全警示用語。"
-            },
-            {
-                "id": "team_008", "category": "職場團隊溝通",
-                "zh": { "word": "辛苦了", "phonetic": "xīn kǔ le", "example": "今天大家辛苦了，表現得很好！" },
-                "en": { "word": "Good job", "phonetic": "good job", "example": "Great job today, everyone!" },
-                "vi": { "word": "Vất vả rồi", "phonetic": "vat va roi", "example": "Hôm nay mọi người vất vả rồi." },
-                "id": { "word": "Kerja bagus", "phonetic": "ker-ja ba-gus", "example": "Terima kasih untuk hari ini, kerja bagus!" },
-                "balinese": { "word": "Suksma atas usahane", "phonetic": "suks-ma a-tas u-sa-ha-ne", "example": "Suksma atas usahane sarene sami." },
-                "note": "餐期結束或下班時慰勞同事用語。"
-            },
-            {
-                "id": "team_009", "category": "職場團隊溝通",
-                "zh": { "word": "我處理 / 我來", "phonetic": "wǒ chǔ lǐ", "example": "這桌的特別需求交給我處理。" },
-                "en": { "word": "I will handle it", "phonetic": "eye wil han-dl it", "example": "I will handle the special request for this table." },
-                "vi": { "word": "Để tôi làm", "phonetic": "de toi lam", "example": "Yêu cầu đặc biệt này để tôi làm." },
-                "id": { "word": "Saya yang urus", "phonetic": "sa-ya yang u-rus", "example": "Permintaan khusus ini biar saya yang urus." },
-                "balinese": { "word": "Titiang jagi ngaturang", "phonetic": "ti-tiang ja-gi ngat-u-rang", "example": "Titiang jagi ngaturang ring meja puniki." },
-                "note": "主動承擔任務時使用。"
-            },
-            {
-                "id": "team_010", "category": "職場團隊溝通",
-                "zh": { "word": "需要補貨 / 補東西", "phonetic": "xū yào bǔ huò", "example": "餐具區快空了，需要補貨。" },
-                "en": { "word": "Need to restock", "phonetic": "need tuh ree-stok", "example": "Cutlery is running low, need to restock." },
-                "vi": { "word": "Cần bổ sung", "phonetic": "can bo sung", "example": "Dao nĩa sắp hết rồi, cần bổ sung." },
-                "id": { "word": "Perlu isi ulang", "phonetic": "per-lu i-si u-lang", "example": "Peralatan makan mau habis, perlu isi ulang." },
-                "balinese": { "word": "Nunas dagingin malih", "phonetic": "nu-nas da-ging-in ma-lih", "example": "Peralatan sampun telat, nunas dagingin." },
-                "note": "備品不足時提醒補貨。"
-            },
-            {
-                "id": "team_011", "category": "職場團隊溝通",
-                "zh": { "word": "請整理桌面", "phonetic": "qǐng zhěng lǐ zhuō miàn", "example": "8號桌客人離座了，請整理桌面。" },
-                "en": { "word": "Clear the table", "phonetic": "kleer thuh tay-bl", "example": "Guests at table 8 left, please clear the table." },
-                "vi": { "word": "Dọn dẹp bàn", "phonetic": "don dep ban", "example": "Khách bàn 8 đã đi, vui lòng dọn bàn." },
-                "id": { "word": "Bersihkan meja", "phonetic": "ber-sih-kan me-ja", "example": "Tamu meja 8 sudah pergi, tolong bersihkan meja." },
-                "balinese": { "word": "Ngresikin meja", "phonetic": "ngre-si-kin me-ja", "example": "Durusang ngresikin meja 8." },
-                "note": "翻桌整理指示。"
-            },
-            {
-                "id": "team_012", "category": "職場團隊溝通",
-                "zh": { "word": "小心燙手！", "phonetic": "xiǎo xīn tàng shǒu", "example": "這是剛出爐的鐵板，小心燙手！" },
-                "en": { "word": "Hot plate!", "phonetic": "hot playt", "example": "Sizzling plate just out of kitchen, hot plate!" },
-                "vi": { "word": "Nóng đấy!", "phonetic": "nong day", "example": "Món này mới ra lò, nóng đấy!" },
-                "id": { "word": "Awas panas!", "phonetic": "a-was pa-nas", "example": "Piring hotplate baru keluar, awas panas!" },
-                "balinese": { "word": "Yatna, kebus!", "phonetic": "yat-na ke-bus", "example": "Yatna-yatna, ajengan kebus pisan!" },
-                "note": "端送高溫餐點時警告警示。"
-            },
-            {
-                "id": "team_013", "category": "職場團隊溝通",
-                "zh": { "word": "開會 / 集合", "phonetic": "kāi huì / jí hé", "example": "各位夥伴，勤前會集合！" },
-                "en": { "word": "Briefing / Meeting", "phonetic": "breef-ing", "example": "Everyone, time for the pre-shift briefing!" },
-                "vi": { "word": "Họp / Tập hợp", "phonetic": "hop / tap hop", "example": "Mọi người ơi, tập hợp họp đầu ca!" },
-                "id": { "word": "Kumpul / Briefing", "phonetic": "kum-pul", "example": "Semuanya, ayo kumpul untuk briefing!" },
-                "balinese": { "word": "Mupul sareng sami", "phonetic": "mu-pul sa-reng sa-mi", "example": "Ngiring mupul sareng sami mangkin." },
-                "note": "集合宣導或勤前會召集。"
-            },
-            {
-                "id": "team_014", "category": "職場團隊溝通",
-                "zh": { "word": "交接班", "phonetic": "jiāo jiē bān", "example": "這是早班與晚班的交接事項。" },
-                "en": { "word": "Shift handover", "phonetic": "shift han-doh-ver", "example": "Here is the handover notes between shifts." },
-                "vi": { "word": "Giao ca", "phonetic": "giao ca", "example": "Đây là ghi chú giao ca sáng và tối." },
-                "id": { "word": "Serah terima shift", "phonetic": "se-rah te-ri-ma", "example": "Ini catatan serah terima shift pagi dan malam." },
-                "balinese": { "word": "Ganti tugas", "phonetic": "gan-ti tu-gas", "example": "Puniki catatan ganti tugas." },
-                "note": "班別交接與注意事項傳達。"
-            },
-            {
-                "id": "team_015", "category": "職場團隊溝通",
-                "zh": { "word": "走菜 / 出餐", "phonetic": "zǒu cài / chū cān", "example": "廚房注意，3號桌開始走菜！" },
-                "en": { "word": "Serve dishes", "phonetic": "serv dish-ez", "example": "Kitchen attention, serve dishes for table 3!" },
-                "vi": { "word": "Lên món", "phonetic": "len mon", "example": "Bếp chú ý, bắt đầu lên món bàn 3!" },
-                "id": { "word": "Jalan makanan / Keluar makanan", "phonetic": "ja-lan ma-ka-nan", "example": "Dapur perhatian, mulai jalan makanan meja 3!" },
-                "balinese": { "word": "Ngaturang ajengan", "phonetic": "ngat-u-rang a-jeng-an", "example": "Durusang ngaturang ajengan meja 3!" },
-                "note": "內外場出餐對接指令。"
-            },
-            {
-                "id": "team_016", "category": "職場團隊溝通",
-                "zh": { "word": "下班 / 再見", "phonetic": "xià bān / zài jiàn", "example": "我先下班了，大家明天見！" },
-                "en": { "word": "Off work / Goodbye", "phonetic": "off werk / good-bye", "example": "I'm off work now. See you tomorrow!" },
-                "vi": { "word": "Tan ca / Tạm biệt", "phonetic": "tan ca / tam biet", "example": "Tôi tan ca đây, hẹn gặp lại ngày mai!" },
-                "id": { "word": "Pulang kerja / Sampai jumpa", "phonetic": "pu-lang ker-ja", "example": "Saya pulang dulu, sampai jumpa besok!" },
-                "balinese": { "word": "Sampun mawali / Mipit", "phonetic": "sam-pun ma-wa-li", "example": "Titiang sampun mawali, benjang matemu." },
-                "note": "離班道別用語。"
             }
         ];
 
         let filteredCards = [...allFlashcards];
         let currentIndex = 0;
+        let availableVoices = [];
+
+        // 初始化加載設備支援的語音
+        function loadVoices() {
+            if ('speechSynthesis' in window) {
+                availableVoices = window.speechSynthesis.getVoices();
+            }
+        }
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.onvoiceschanged = loadVoices;
+            loadVoices();
+        }
 
         function filterCategory() {
             const selectedCat = document.getElementById('categorySelect').value;
@@ -529,15 +300,39 @@
 
         function playSpeech() {
             const currentLang = document.getElementById('langSelect').value;
+            const preferredGender = document.getElementById('genderSelect').value;
             const cardData = filteredCards[currentIndex];
             const text = cardData[currentLang] ? cardData[currentLang].word : cardData['zh'].word;
+
             const langCodeMap = { zh: 'zh-TW', en: 'en-US', vi: 'vi-VN', id: 'id-ID', balinese: 'id-ID' };
+            const targetLang = langCodeMap[currentLang] || 'zh-TW';
 
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
                 const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = langCodeMap[currentLang] || 'zh-TW';
+                utterance.lang = targetLang;
+
+                // 搜尋設備上對應語言與性別的語音
+                if (availableVoices.length === 0) loadVoices();
+                const matchedVoices = availableVoices.filter(v => v.lang.replace('_', '-').toLowerCase().startsWith(targetLang.slice(0, 2).toLowerCase()));
+
+                if (matchedVoices.length > 0) {
+                    let chosenVoice = matchedVoices.find(v => {
+                        const name = v.name.toLowerCase();
+                        if (preferredGender === 'male') {
+                            return name.includes('male') || name.includes('david') || name.includes('george') || name.includes('kangkang') || name.includes('boy') || name.includes('man');
+                        } else {
+                            return name.includes('female') || name.includes('zira') || name.includes('yating') || name.includes('hsiao') || name.includes('girl') || name.includes('woman') || name.includes('mei-jia');
+                        }
+                    });
+
+                    if (!chosenVoice) chosenVoice = matchedVoices[0]; // 若找不到完全符合性別名稱的則用預設語音
+                    utterance.voice = chosenVoice;
+                }
+
                 window.speechSynthesis.speak(utterance);
+            } else {
+                alert("您的瀏覽器不支援語音播放功能。");
             }
         }
 
