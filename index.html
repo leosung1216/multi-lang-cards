@@ -307,6 +307,7 @@
                     { value: "balinese", text: "🇮🇩 峇里島語 (Basa Bali)" }
                 ],
                 categories: {
+                    "餐具對照": "11. 餐廳餐具名稱對照 (18組)",
                     "顧客接待": "1. 顧客接待與問候 (10組)",
                     "職場團隊溝通": "2. 職場團隊溝通 (15組)",
                     "日常生活關懷": "3. 日常生活與關懷 (10組)",
@@ -336,6 +337,7 @@
                     { value: "id", text: "🇮🇩 Tiếng Indonesia" }
                 ],
                 categories: {
+                    "餐具對照": "11. Dụng cụ ăn uống (18)",
                     "顧客接待": "1. Đón tiếp khách (10)",
                     "職場團隊溝通": "2. Giao tiếp đồng nghiệp (15)",
                     "日常生活關懷": "3. Quan tâm hàng ngày (10)",
@@ -365,6 +367,7 @@
                     { value: "vi", text: "🇻🇳 Vietnam (Tiếng Việt)" }
                 ],
                 categories: {
+                    "餐具對照": "11. Peralatan Makan (18)",
                     "顧客接待": "1. Menyambut Tamu (10)",
                     "職場團隊溝通": "2. Komunikasi Tim (15)",
                     "日常生活關懷": "3. Perhatian Harian (10)",
@@ -380,6 +383,170 @@
         };
 
         const allFlashcards = [
+            // --- 11. 餐廳餐具名稱對照 (新增18組對照圖資料) ---
+            {
+                "id": "cutlery_001", "category": "餐具對照",
+                "zh": { "word": "湯匙", "phonetic": "Tāng chí", "example": "請幫我拿一支湯匙。" },
+                "en": { "word": "Soup Spoon", "phonetic": "soop spoon", "example": "Please bring me a soup spoon." },
+                "vi": { "word": "Muỗng ăn súp", "phonetic": "muong an sup", "example": "Cho tôi xin một cái muỗng ăn súp." },
+                "id": { "word": "Sendok Sup", "phonetic": "sen-dok sup", "example": "Tolong ambilkan satu sendok sup." },
+                "balinese": { "word": "Sendok Sup", "phonetic": "sen-dok sup", "example": "Nunas sendok sup asiki." },
+                "note": "標準喝湯用大湯匙。"
+            },
+            {
+                "id": "cutlery_002", "category": "餐具對照",
+                "zh": { "word": "清湯匙", "phonetic": "Qīng tāng chí", "example": "這桌需要一支清湯匙。" },
+                "en": { "word": "Bouillon Spoon", "phonetic": "bool-yahn spoon", "example": "This table needs a bouillon spoon." },
+                "vi": { "word": "Muỗng nước dùng", "phonetic": "muong nuoc dung", "example": "Bàn này cần một cái muỗng nước dùng." },
+                "id": { "word": "Sendok Kuah Bening", "phonetic": "sen-dok ku-ah be-ning", "example": "Meja ini butuh sendok kuah bening." },
+                "balinese": { "word": "Sendok Kuah Bening", "phonetic": "sen-dok ku-ah be-ning", "example": "Nunas sendok kuah bening." },
+                "note": "圓形匙面的清湯/高湯匙。"
+            },
+            {
+                "id": "cutlery_003", "category": "餐具對照",
+                "zh": { "word": "小湯匙", "phonetic": "Xiǎo tāng chí", "example": "請給客人一支小湯匙吃甜點。" },
+                "en": { "word": "Teaspoon / Small Spoon", "phonetic": "tee-spoon", "example": "Please give the guest a teaspoon for dessert." },
+                "vi": { "word": "Muỗng nhỏ", "phonetic": "muong nho", "example": "Cho khách một cái muỗng nhỏ ăn tráng miệng." },
+                "id": { "word": "Sendok Kecil", "phonetic": "sen-dok ke-cil", "example": "Tolong berikan sendok kecil untuk pencuci mulut." },
+                "balinese": { "word": "Sendok Alit", "phonetic": "sen-dok a-lit", "example": "Nunas sendok alit." },
+                "note": "甜點匙、茶匙或咖啡匙。"
+            },
+            {
+                "id": "cutlery_004", "category": "餐具對照",
+                "zh": { "word": "大叉", "phonetic": "Dà chā", "example": "請補一支大叉子到主餐桌。" },
+                "en": { "word": "Dinner Fork", "phonetic": "din-ner fork", "example": "Please supply a dinner fork to the main table." },
+                "vi": { "word": "Nĩa lớn", "phonetic": "nia lon", "example": "Vui lòng bổ sung một cái nĩa lớn." },
+                "id": { "word": "Garpu Makan", "phonetic": "gar-pu ma-kan", "example": "Tolong tambahkan satu garpu makan." },
+                "balinese": { "word": "Garpu Ageng", "phonetic": "gar-pu a-geng", "example": "Nunas garpu ageng." },
+                "note": "主餐用大餐叉。"
+            },
+            {
+                "id": "cutlery_005", "category": "餐具對照",
+                "zh": { "word": "水果叉", "phonetic": "Shuǐ guǒ chā", "example": "這是吃水果用的水果叉。" },
+                "en": { "word": "Fruit Fork", "phonetic": "froot fork", "example": "This is a fruit fork used for fruit." },
+                "vi": { "word": "Nĩa trái cây", "phonetic": "nia trai cay", "example": "Đây là nĩa trái cây." },
+                "id": { "word": "Garpu Buah", "phonetic": "gar-pu bu-ah", "example": "Ini garpu buah untuk makan buah." },
+                "balinese": { "word": "Garpu Buah", "phonetic": "gar-pu bu-ah", "example": "Garpu buah majeng tamiu." },
+                "note": "較小型的水果/點心叉。"
+            },
+            {
+                "id": "cutlery_006", "category": "餐具對照",
+                "zh": { "word": "大刀", "phonetic": "Dà dāo", "example": "主餐大刀放在右側。" },
+                "en": { "word": "Dinner Knife", "phonetic": "din-ner nif", "example": "Place the dinner knife on the right side." },
+                "vi": { "word": "Dao ăn", "phonetic": "dao an", "example": "Đặt dao ăn ở bên phải." },
+                "id": { "word": "Pisau Makan", "phonetic": "pi-sau ma-kan", "example": "Letakkan pisau makan di sebelah kanan." },
+                "balinese": { "word": "Pisau Ageng", "phonetic": "pi-sau a-geng", "example": "Pisau ageng ring tengawan." },
+                "note": "主餐切肉用大刀。"
+            },
+            {
+                "id": "cutlery_007", "category": "餐具對照",
+                "zh": { "word": "奶油刀", "phonetic": "Nǎi yóu dāo", "example": "麵包盤旁請放奶油刀。" },
+                "en": { "word": "Butter Knife", "phonetic": "buht-ter nif", "example": "Place a butter knife next to the bread plate." },
+                "vi": { "word": "Dao phết bơ", "phonetic": "dao phet bo", "example": "Đặt dao phết bơ cạnh đĩa bánh mì." },
+                "id": { "word": "Pisau Mentega", "phonetic": "pi-sau men-te-ga", "example": "Tolong taruh pisau mentega di samping piring roti." },
+                "balinese": { "word": "Pisau Mentega", "phonetic": "pi-sau men-te-ga", "example": "Pisau mentega majeng roti." },
+                "note": "塗抹奶油用圓頭小刀。"
+            },
+            {
+                "id": "cutlery_008", "category": "餐具對照",
+                "zh": { "word": "水果刀", "phonetic": "Shuǐ guǒ dāo", "example": "水果刀已經消毒乾淨。" },
+                "en": { "word": "Fruit Knife", "phonetic": "froot nif", "example": "The fruit knife has been sanitized." },
+                "vi": { "word": "Dao trái cây", "phonetic": "dao trai cay", "example": "Dao trái cây đã được tiệt trùng." },
+                "id": { "word": "Pisau Buah", "phonetic": "pi-sau bu-ah", "example": "Pisau buah sudah disterilkan bersih." },
+                "balinese": { "word": "Pisau Buah", "phonetic": "pi-sau bu-ah", "example": "Pisau buah sampun resik." },
+                "note": "水果盤專用切刀。"
+            },
+            {
+                "id": "cutlery_009", "category": "餐具對照",
+                "zh": { "word": "筷子", "phonetic": "Kuài zi", "example": "請幫客人準備一雙筷子。" },
+                "en": { "word": "Chopsticks", "phonetic": "chop-stiks", "example": "Please prepare a pair of chopsticks for the guest." },
+                "vi": { "word": "Đũa", "phonetic": "dua", "example": "Vui lòng chuẩn bị một đôi đũa cho khách." },
+                "id": { "word": "Sumpit", "phonetic": "sum-pit", "example": "Tolong siapkan sepasang sumpit untuk tamu." },
+                "balinese": { "word": "Sumpit", "phonetic": "sum-pit", "example": "Nunas sumpit asiki." },
+                "note": "中式/日式用餐筷子。"
+            },
+            {
+                "id": "cutlery_010", "category": "餐具對照",
+                "zh": { "word": "飯碗", "phonetic": "Fàn wǎn", "example": "請拿三個乾淨的飯碗。" },
+                "en": { "word": "Rice Bowl", "phonetic": "ris bohl", "example": "Please bring three clean rice bowls." },
+                "vi": { "word": "Chén cơm", "phonetic": "chen com", "example": "Lấy giúp tôi ba cái chén cơm sạch." },
+                "id": { "word": "Mangkok Nasi", "phonetic": "mang-kok na-si", "example": "Tolong ambilkan tiga mangkok nasi bersih." },
+                "balinese": { "word": "Mangkok Nasi", "phonetic": "mang-kok na-si", "example": "Nunas mangkok nasi iga." },
+                "note": "標準米飯白瓷碗。"
+            },
+            {
+                "id": "cutlery_011", "category": "餐具對照",
+                "zh": { "word": "骨盤", "phonetic": "Gǔ pán", "example": "桌面請換新的骨盤。" },
+                "en": { "word": "Bone Plate / Side Plate", "phonetic": "bohn playt", "example": "Please change a new bone plate for the table." },
+                "vi": { "word": "Đĩa", "phonetic": "dia", "example": "Xin thay đĩa mới cho bàn ạ." },
+                "id": { "word": "Piring", "phonetic": "pi-ring", "example": "Tolong ganti piring baru untuk meja ini." },
+                "balinese": { "word": "Piring", "phonetic": "pi-ring", "example": "Ganti piring anyar." },
+                "note": "盛裝骨頭殘渣的小小分菜盤。"
+            },
+            {
+                "id": "cutlery_012", "category": "餐具對照",
+                "zh": { "word": "沙拉碗", "phonetic": "Shā lā wǎn", "example": "沙拉碗放在冷菜區。" },
+                "en": { "word": "Salad Bowl", "phonetic": "sal-uhd bohl", "example": "Salad bowls are at the cold dishes section." },
+                "vi": { "word": "Tô salad", "phonetic": "to salad", "example": "Tô salad đặt ở khu món lạnh." },
+                "id": { "word": "Mangkok Salad", "phonetic": "mang-kok sa-lad", "example": "Mangkok salad ditaruh di area makanan dingin." },
+                "balinese": { "word": "Mangkok Salad", "phonetic": "mang-kok sa-lad", "example": "Mangkok salad ring area dingin." },
+                "note": "寬口沙拉/生菜碗。"
+            },
+            {
+                "id": "cutlery_013", "category": "餐具對照",
+                "zh": { "word": "漆碗", "phonetic": "Qī wǎn", "example": "日式味噌湯要用漆碗盛裝。" },
+                "en": { "word": "Lacquer Bowl", "phonetic": "lak-er bohl", "example": "Japanese miso soup is served in a lacquer bowl." },
+                "vi": { "word": "Tô súp", "phonetic": "to sup", "example": "Súp miso Nhật Dùng tô súp nhựa mài." },
+                "id": { "word": "Mangkok Sup", "phonetic": "mang-kok sup", "example": "Sup miso Jepang disajikan dengan mangkok sup." },
+                "balinese": { "word": "Mangkok Sup", "phonetic": "mang-kok sup", "example": "Mangkok sup miso." },
+                "note": "深色日式漆器湯碗。"
+            },
+            {
+                "id": "cutlery_014", "category": "餐具對照",
+                "zh": { "word": "冰淇淋碗", "phonetic": "Bīng qí lín wǎn", "example": "請在冰淇淋區補充冰淇淋碗。" },
+                "en": { "word": "Ice Cream Bowl", "phonetic": "is kreem bohl", "example": "Please restock ice cream bowls at the station." },
+                "vi": { "word": "Tô kem", "phonetic": "to kem", "example": "Vui lòng bổ sung tô kem ở khu kem." },
+                "id": { "word": "Mangkok Es Krim", "phonetic": "mang-kok es krim", "example": "Tolong isi ulang mangkok es krim di area es krim." },
+                "balinese": { "word": "Mangkok Es Krim", "phonetic": "mang-kok es krim", "example": "Mangkok es krim ring area es krim." },
+                "note": "甜點冰淇淋專用杯碗。"
+            },
+            {
+                "id": "cutlery_015", "category": "餐具對照",
+                "zh": { "word": "24盤", "phonetic": "Èr shí sì pán", "example": "主餐出餐請使用24盤。" },
+                "en": { "word": "24 Plate (24cm Square Plate)", "phonetic": "playt 24", "example": "Please use 24 plates for main courses." },
+                "vi": { "word": "Đĩa 24", "phonetic": "dia 24", "example": "Dùng đĩa 24 khi lên món chính." },
+                "id": { "word": "Piring 24", "phonetic": "pi-ring 24", "example": "Gunakan piring 24 untuk penyajian makanan utama." },
+                "balinese": { "word": "Piring 24", "phonetic": "pi-ring 24", "example": "Anggen piring 24." },
+                "note": "24公分方形規格瓷盤。"
+            },
+            {
+                "id": "cutlery_016", "category": "餐具對照",
+                "zh": { "word": "20盤", "phonetic": "Èr shí pán", "example": "開胃菜請用20盤裝盤。" },
+                "en": { "word": "20 Plate (20cm Square Plate)", "phonetic": "playt 20", "example": "Plate appetizers using 20 plates." },
+                "vi": { "word": "Đĩa 20", "phonetic": "dia 20", "example": "Dùng đĩa 20 để bày món khai vị." },
+                "id": { "word": "Piring 20", "phonetic": "pi-ring 20", "example": "Gunakan piring 20 untuk hidangan pembuka." },
+                "balinese": { "word": "Piring 20", "phonetic": "pi-ring 20", "example": "Anggen piring 20." },
+                "note": "20公分中型規格瓷盤。"
+            },
+            {
+                "id": "cutlery_017", "category": "餐具對照",
+                "zh": { "word": "雙耳", "phonetic": "Shuāng ěr", "example": "熱湯請端雙耳湯碗予客人。" },
+                "en": { "word": "Two-handled Cup / Bowl", "phonetic": "too hand-ld kup", "example": "Serve hot soup using two-handled bowls." },
+                "vi": { "word": "Tô 2 tai", "phonetic": "to 2 tai", "example": "Súp nóng vui lòng dùng tô 2 tai." },
+                "id": { "word": "Mangkuk Bertelinga", "phonetic": "mang-kuk ber-te-li-nga", "example": "Sajikan sup panas dengan mangkuk bertelinga." },
+                "balinese": { "word": "Mangkuk Bertelinga", "phonetic": "mang-kuk ber-te-li-nga", "example": "Mangkuk bertelinga majeng sup." },
+                "note": "帶有左右雙手把的雙耳湯杯/碗。"
+            },
+            {
+                "id": "cutlery_018", "category": "餐具對照",
+                "zh": { "word": "雙耳底盤", "phonetic": "Shuāng ěr dǐ pán", "example": "雙耳湯碗下面必須墊雙耳底盤。" },
+                "en": { "word": "Saucer for Two-handled Cup", "phonetic": "saw-ser", "example": "Place a saucer under the two-handled bowl." },
+                "vi": { "word": "Đĩa lót tô 2 tai", "phonetic": "dia lot to 2 tai", "example": "Phải lót đĩa lót tô 2 tai bên dưới." },
+                "id": { "word": "Tatakan Mangkuk Telinga", "phonetic": "ta-ta-kan mang-kuk te-li-nga", "example": "Mangkuk bertelinga harus diberi tatakan." },
+                "balinese": { "word": "Tatakan Mangkuk", "phonetic": "ta-ta-kan mang-kuk", "example": "Tatakan mangkuk bertelinga." },
+                "note": "雙耳湯碗專用底襯瓷盤。"
+            },
+
             // --- 1. 顧客接待與問候 (10組) ---
             {
                 "id": "recv_001", "category": "顧客接待",
@@ -472,7 +639,7 @@
                 "note": "上菜完畢時的結尾敬語。"
             },
 
-            // --- 2. 職場團隊溝通 (含新增單字，共15組) ---
+            // --- 2. 職場團隊溝通 (共15組) ---
             {
                 "id": "team_001", "category": "職場團隊溝通",
                 "zh": { "word": "上班", "phonetic": "shàng bān", "example": "我今天早上八點上班。" },
@@ -1379,7 +1546,7 @@
 
             const catSelect = document.getElementById('categorySelect');
             let catHtml = `<option value="ALL">${config.allCat}</option>`;
-            const catKeys = ["顧客接待", "職場團隊溝通", "日常生活關懷", "生活需求指示", "現場請託協助", "基礎數字", "進階數字與結帳", "餐飲與點餐", "稱呼與日常應答", "方向與交通"];
+            const catKeys = ["餐具對照", "顧客接待", "職場團隊溝通", "日常生活關懷", "生活需求指示", "現場請託協助", "基礎數字", "進階數字與結帳", "餐飲與點餐", "稱呼與日常應答", "方向與交通"];
             catKeys.forEach(key => {
                 const label = config.categories[key] || key;
                 catHtml += `<option value="${key}">${label}</option>`;
